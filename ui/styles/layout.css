@@ -1,4 +1,4 @@
-/* sign up form */
+/* sign-up and sign-in forms */
 .container{
     width: 80%;
     margin: 0 auto;
@@ -40,7 +40,8 @@ form h2{
   input[type="text"],
   input[type="email"],
   input[type="date"],
-  input[type="submit"]{
+  input[type="submit"],
+  input[type="password"]{
     border: 1px solid #60bebe;
     font-size: 1.2em;
     padding: .5em .5em;
