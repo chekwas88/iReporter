@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../styles/general.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../styles/record.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../styles/layout.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="./cases.html">Home</a> </li>
+            <li><a href="../admin/admin.html">Records</a></li>
+            <li><a href="./new-record.html">Report Case</a></li>
+            <li><a href="../sign-in.html">Sign in</a></li>
+            <li><a href="../signup.html">Sign up</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+    <main class="content">
+        <div class="show">
+            <aside class="mapd">
+                map location display
+            </aside>
+            <section class="record">
+                <div class="singleton">
+                    <h4>Heriberto Nickel</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat,
+                        cum vitae commodi nemo corrupti voluptate? Odio,
+                        quidem! Neque reprehenderit deserunt quaerat,
+                        soluta voluptate error explicabo quod corrupti laboriosam aut quia!
+                    </p>
+
+                    <div class="status">
+                        <div class="status-check">
+                            <input type="checkbox" id="draft" name="entry" value="draft">
+                            <label for="draft">Draft</label>
+                        </div>
+                        <div class="status-check">
+                            <input type="checkbox" id="investigate" name="investigation" value="investigating">
+                            <label for="investigate">Investigating</label>
+                        </div>
+                        <div class="status-check">
+                            <input type="checkbox" id="resolved" name="resolved" value="resolve">
+                            <label for="resolved">Resolved</label>
+                        </div>
+                        <div class="status-check">
+                            <input type="checkbox" id="rejected" name="reject" value="rejection">
+                            <label for="rejected">Rejection</label>
+                        </div>
+                    </div>
+                    <div class="button-display">
+                        <a class="edit" href="#"><button>Edit</button></a>
+                        <a class="delete" href="#"><button>Delete</button></a>
+                    </div>
+
+                </div>
+
+
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

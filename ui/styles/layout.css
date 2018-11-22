@@ -1,60 +1,64 @@
-/* sign-up and sign-in forms */
-.container{
-    width: 80%;
-    margin: 0 auto;
-}
 
-form {
-    background: #fff;
-    padding: 1em 4em 2em;
-    max-width: 30%;
-    margin: 20px auto 0;
-    box-shadow: 0 0 .5em #012523;
-    border-radius: 2px;
+
+.content{
+    
+    width: 70%;
+    margin: 10px auto;
 
 }
 
-form h2{
-     
-    margin:0 0 50px 0;
-    padding:10px;
-    text-align:center;
-    font-size:30px;
-    color:#0a8d84;
-    border-bottom:solid 1px #0a8d84;
-      
+.side{
+    display: flex;
+    height: auto;
+    margin: 1.8rem 0 1.8rem;
+    border-bottom:1px solid #b3b8b7;
+    
 }
 
-.input-full input {
-    display: block;
+.user{
+    width: 30%;
+    margin: 1rem auto;
+    border-bottom: 1px solid #012523;
+    text-align: center;
+
+}
+.cases{
+    flex: 1 0 auto;
+    justify-content: space-between;
+    text-align: center;
+    width: 33.3%;
+    margin: 1%;
     box-sizing: border-box;
-    width: 100%;
-    outline: none;
-    margin:0;
-  }
-
-  .form-class .input-full{
-    margin: 0 0 1em 0;
-    position: relative;
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="date"],
-  input[type="submit"],
-  input[type="password"]{
-    border: 1px solid #60bebe;
-    font-size: 1.2em;
-    padding: .5em .5em;
-    border-radius: 2px;
-  
-  }
-
-  input[type="submit"]{
-      background: #012523;
-      color: #fff;
-  }
-  input[type="submit"]:hover{
-    cursor: pointer;
 }
 
-  
+
+
+.items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -25px;
+    margin-top: -15px;
+}
+
+
+.items .item {
+    flex: 1 0 200px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #f4f8f8;
+    margin-left: 25px;
+    margin-top: 15px;
+    border-radius: 4px;
+}
+
+.item p a{
+    text-decoration: none;
+    color: #0ab3ad;
+}
+
+@media screen and (min-width: 699px){
+    .items .item{
+        flex: 1 0 300px;
+    }
+}
+
