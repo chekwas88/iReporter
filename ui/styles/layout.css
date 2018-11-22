@@ -6,6 +6,13 @@
     margin: 10px auto;
 
 }
+h1{
+    margin:0 0 20px 0;
+    padding:10px;
+    text-align:center;
+    font-size:30px;
+    color:#0a8d84;   
+}
 
 .side{
     display: flex;
