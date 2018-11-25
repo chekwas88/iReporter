@@ -11,10 +11,11 @@ app.get('/api/v1/red-flags', (req, res) => {
 });
 
 app.post('/api/v1/red-flags', (req, res) => {
-  const status = res.statusCode;
-  Incident.status = status;
+  // const status = res.statusCode;
+  // Incident.status = status;
+  const id = Incident.incidents.length;
   const redFlag = {
-    id: Incident.incidents.length,
+    id,
     createdBy: req.body.createdBy,
     createdOn: req.body.createdOn,
     type: req.body.type,
@@ -23,7 +24,15 @@ app.post('/api/v1/red-flags', (req, res) => {
     location: req.body.location,
   };
   Incident.incidents.push(redFlag);
-  res.send(Incident);
+  res.json({
+    status: res.statusCode,
+    incidents: [
+      {
+        id,
+        message: 'red-flag incident was created successfully',
+      },
+    ],
+  });
 });
 
 const port = process.env.PORT || 4001;
