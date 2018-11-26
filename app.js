@@ -67,6 +67,23 @@ app.patch('/api/v1/red-flags/:id/location', (req, res, next) => {
   });
 });
 
+app.patch('/api/v1/red-flags/:id/comment', (req, res, next) => {
+  const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
+  if (!incident) {
+    next();
+  }
+  incident.comment = req.body.comment;
+  res.json({
+    status: res.statusCode,
+    incidents: [
+      {
+        id: incident.id,
+        message: 'comment has been successfully updated',
+      },
+    ],
+  });
+});
+
 
 app.use((req, res, next) => {
   next(new Error('error occured'));
