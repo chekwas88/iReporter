@@ -1,16 +1,19 @@
 const express = require('express');
 const Incident = require('./model/incident');
+const middleware = require('./middleare/middleware');
 
 const app = express();
 app.use(express.json());
 
-app.get('/api/v1/red-flags', (req, res) => {
+
+app.get('/api/v1/red-flags', (req, res, next) => {
   const status = res.statusCode;
   Incident.status = status;
   res.send(Incident);
+  next();
 });
 
-app.post('/api/v1/red-flags', (req, res) => {
+app.post('/api/v1/red-flags', middleware, (req, res, next) => {
   // const status = res.statusCode;
   // Incident.status = status;
   const id = Incident.incidents.length;
@@ -33,7 +36,15 @@ app.post('/api/v1/red-flags', (req, res) => {
       },
     ],
   });
+  next();
 });
+
+app.use((req, res, next) => {
+  next(new Error('error occured'));
+});
+
+app.use(middleware);
+
 
 const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Listening on port ${port}`));
