@@ -36,41 +36,24 @@ describe('/POST red-flags', () => {
         done();
       });
   });
-
-  it('it should return an object of created red-flag', (done) => {
-    chai.request(app)
-      .post('/api/v1/red-flags')
-      .end((err, res) => {
-        assert.isObject(res.body, 'incidents is not of type object');
-        done();
-      });
-  });
 });
+
 
 describe('/Get red-flags/:id', () => {
   it('it should get a red-flag', (done) => {
     chai.request(app)
-      .post('/api/v1/red-flags/:id')
+      .get('/api/v1/red-flags/:id')
       .end((err, res) => {
         assert.equal(res.status, 200, 'request was unsuccessful');
         done();
       });
   });
 
-  it('it should return an object of red-flag', (done) => {
+  it('it should return type of incident', (done) => {
     chai.request(app)
-      .post('/api/v1/red-flags:/id')
+      .get('/api/v1/red-flags:/id')
       .end((err, res) => {
         assert.isObject(res.body, 'incident is not of type object');
-        done();
-      });
-  });
-
-  it('it should return only one redflag', (done) => {
-    chai.request(app)
-      .post('/api/v1/red-flags/:id')
-      .end((err, res) => {
-        assert.lengthOf(res.body.incidents, 1, 'length is not 1');
         done();
       });
   });
@@ -79,18 +62,20 @@ describe('/Get red-flags/:id', () => {
 describe('/Get red-flags/:id/location', () => {
   it('it should get a red-flag', (done) => {
     chai.request(app)
-      .post('/api/v1/red-flags/:id/location')
+      .patch('/api/v1/red-flags/:id/location')
       .end((err, res) => {
         assert.equal(res.status, 200, 'request was unsuccessful');
         done();
       });
   });
+});
 
-  it('it should return an object of red-flag', (done) => {
+describe('/Get red-flags/:id/comment', () => {
+  it('it should get a red-flag', (done) => {
     chai.request(app)
-      .post('/api/v1/red-flags:id/location')
+      .patch('/api/v1/red-flags/:id/comment')
       .end((err, res) => {
-        assert.isString(res.body.location, 'location is not of type string');
+        assert.equal(res.status, 200, 'request was unsuccessful');
         done();
       });
   });
