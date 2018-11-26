@@ -37,6 +37,20 @@ app.post('/api/v1/red-flags', middleware, (req, res, next) => {
   next();
 });
 
+app.get('/api/v1/red-flags/:id', (req, res, next) => {
+  const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
+  if (!incident) {
+    next();
+  }
+  // res.send(incident);
+  res.json({
+    status: res.statusCode,
+    incidents: [
+      incident,
+    ],
+  });
+});
+
 app.use((req, res, next) => {
   next(new Error('error occured'));
 });
