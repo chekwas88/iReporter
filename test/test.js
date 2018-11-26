@@ -2,7 +2,6 @@ const { describe, it } = require('mocha');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../app');
-// const response = require('../model/response');
 
 const { assert } = chai;
 

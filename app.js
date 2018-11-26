@@ -1,6 +1,6 @@
 const express = require('express');
 const Incident = require('./model/incident');
-const middleware = require('./middleare/middleware');
+const middleware = require('./middleware/middleware');
 
 const app = express();
 app.use(express.json());
@@ -14,8 +14,6 @@ app.get('/api/v1/red-flags', (req, res, next) => {
 });
 
 app.post('/api/v1/red-flags', middleware, (req, res, next) => {
-  // const status = res.statusCode;
-  // Incident.status = status;
   const id = Incident.incidents.length;
   const redFlag = {
     id,
