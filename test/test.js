@@ -80,3 +80,14 @@ describe('/Get red-flags/:id/comment', () => {
       });
   });
 });
+
+describe('/DELETE red-flags/:id', () => {
+  it('it should get a red-flag', (done) => {
+    chai.request(app)
+      .delete('/api/v1/red-flags/:id')
+      .end((err, res) => {
+        assert.equal(res.status, 200, 'request was unsuccessful');
+        done();
+      });
+  });
+});

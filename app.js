@@ -84,6 +84,25 @@ app.patch('/api/v1/red-flags/:id/comment', (req, res, next) => {
   });
 });
 
+app.delete('/api/v1/red-flags/:id', (req, res, next) => {
+  const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
+  if (!incident) {
+    next();
+  }
+  const incidentIndex = Incident.incidents.indexOf(incident);
+  Incident.incidents.splice(incidentIndex, 1);
+
+  res.json({
+    status: res.statusCode,
+    incidents: [
+      {
+        id: incident.id,
+        messsage: 'record successfully deleted',
+      },
+    ],
+  });
+});
+
 
 app.use((req, res, next) => {
   next(new Error('error occured'));
