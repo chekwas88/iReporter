@@ -60,7 +60,7 @@ describe('/Get red-flags/:id', () => {
 });
 
 describe('/Get red-flags/:id/location', () => {
-  it('it should get a red-flag', (done) => {
+  it('it should get a red-flag location', (done) => {
     chai.request(app)
       .patch('/api/v1/red-flags/:id/location')
       .end((err, res) => {
@@ -71,7 +71,7 @@ describe('/Get red-flags/:id/location', () => {
 });
 
 describe('/Get red-flags/:id/comment', () => {
-  it('it should get a red-flag', (done) => {
+  it('it should get a red-flag comment', (done) => {
     chai.request(app)
       .patch('/api/v1/red-flags/:id/comment')
       .end((err, res) => {
@@ -82,9 +82,20 @@ describe('/Get red-flags/:id/comment', () => {
 });
 
 describe('/DELETE red-flags/:id', () => {
-  it('it should get a red-flag', (done) => {
+  it('it should delete a red-flag', (done) => {
     chai.request(app)
       .delete('/api/v1/red-flags/:id')
+      .end((err, res) => {
+        assert.equal(res.status, 200, 'request was unsuccessful');
+        done();
+      });
+  });
+});
+
+describe('POST /api/v1/users', () => {
+  it('it should register a user', (done) => {
+    chai.request(app)
+      .post('/api/v1/users')
       .end((err, res) => {
         assert.equal(res.status, 200, 'request was unsuccessful');
         done();
