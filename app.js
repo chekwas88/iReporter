@@ -1,5 +1,6 @@
 const express = require('express');
 const Incident = require('./model/incident');
+const User = require('./model/user');
 const middleware = require('./middleware/middleware');
 
 const app = express();
@@ -7,13 +8,15 @@ app.use(express.json());
 
 
 app.get('/api/v1/red-flags', (req, res, next) => {
+  if (!Incident) {
+    next();
+  }
   const status = res.statusCode;
   Incident.status = status;
   res.send(Incident);
-  next();
 });
 
-app.post('/api/v1/red-flags', middleware, (req, res, next) => {
+app.post('/api/v1/red-flags', (req, res, next) => {
   const id = Incident.incidents.length;
   const redFlag = {
     id,
@@ -24,6 +27,10 @@ app.post('/api/v1/red-flags', middleware, (req, res, next) => {
     comment: req.body.comment,
     location: req.body.location,
   };
+
+  if (!redFlag) {
+    next();
+  }
   Incident.incidents.push(redFlag);
   res.json({
     status: res.statusCode,
@@ -34,7 +41,6 @@ app.post('/api/v1/red-flags', middleware, (req, res, next) => {
       },
     ],
   });
-  next();
 });
 
 app.get('/api/v1/red-flags/:id', (req, res, next) => {
@@ -98,6 +104,35 @@ app.delete('/api/v1/red-flags/:id', (req, res, next) => {
       {
         id: incident.id,
         messsage: 'record successfully deleted',
+      },
+    ],
+  });
+});
+
+// user api
+
+app.post('/api/v1/user', (req, res, next) => {
+  const id = User.users.length;
+  const user = {
+    id,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    othername: req.body.othername,
+    phoneNumber: req.body.phonenumber,
+    registered: req.body.date,
+    username: req.body.username,
+    email: req.body.email,
+  };
+  if (!user) {
+    next();
+  }
+  User.users.push(user);
+  res.json({
+    status: res.statusCode,
+    users: [
+      {
+        id,
+        message: 'user has been registered successfully',
       },
     ],
   });
