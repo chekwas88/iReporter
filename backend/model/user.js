@@ -3,11 +3,12 @@ const User = {
   users: [
     {
       id: 0,
-      firstname: '',
-      lastname: '',
-      username: '',
-      email: '',
-      admin: '',
+      firstname: 'chisom',
+      lastname: 'Onwuchekewa',
+      othername: 'prince',
+      username: 'chekwas88',
+      email: 'princechekwas@gmail.com',
+      admin: 'true',
 
     },
 

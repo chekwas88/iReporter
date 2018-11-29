@@ -45,11 +45,11 @@ p.faint{
     
     nav ul{
         display: flex;
-        justify-content: flex-start;
+        justify-content:center;
     }
-    nav li{
-        flex: 1 1 0;
-    }
+    /* nav li{
+        //flex: 1 1 0;
+    } */
 
     nav a{
         padding: 20px;
