@@ -18,15 +18,17 @@
   },
   "homepage": "https://github.com/chekwas88/iReporter#readme",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "mocha": "^5.2.0",
     "nodemon": "^1.18.6"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "express": "^4.16.4",
+    "joi": "^14.3.0",
+    "mocha": "^5.2.0",
+    "request": "^2.88.0"
   }
 }

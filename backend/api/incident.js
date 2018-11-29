@@ -1,13 +1,9 @@
 const express = require('express');
-const Incident = require('./model/incident');
-const User = require('./model/user');
-const middleware = require('./middleware/middleware');
+const Joi = require('joi');
+const Incident = require('../model/incident');
 
-const app = express();
-app.use(express.json());
-
-
-app.get('/api/v1/red-flags', (req, res, next) => {
+const router = express.Router();
+router.get('/api/v1/red-flags', (req, res, next) => {
   if (!Incident) {
     next();
   }
@@ -16,7 +12,22 @@ app.get('/api/v1/red-flags', (req, res, next) => {
   res.send(Incident);
 });
 
-app.post('/api/v1/red-flags', (req, res, next) => {
+router.post('/api/v1/red-flags', (req, res, next) => {
+  const schema = {
+    createdBy: Joi.number(),
+    type: Joi.string(),
+    createdOn: Joi.string().required(),
+    title: Joi.string(),
+    comment: Joi.string().required(),
+    location: Joi.string().required(),
+  };
+
+  const schemaReturn = Joi.validate(req.body, schema);
+  if (schemaReturn.error) {
+    next();
+    return;
+  }
+
   const id = Incident.incidents.length;
   const redFlag = {
     id,
@@ -27,10 +38,6 @@ app.post('/api/v1/red-flags', (req, res, next) => {
     comment: req.body.comment,
     location: req.body.location,
   };
-
-  if (!redFlag) {
-    next();
-  }
   Incident.incidents.push(redFlag);
   res.json({
     status: res.statusCode,
@@ -43,7 +50,7 @@ app.post('/api/v1/red-flags', (req, res, next) => {
   });
 });
 
-app.get('/api/v1/red-flags/:id', (req, res, next) => {
+router.get('/api/v1/red-flags/:id', (req, res, next) => {
   const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
   if (!incident) {
     next();
@@ -56,7 +63,7 @@ app.get('/api/v1/red-flags/:id', (req, res, next) => {
   });
 });
 
-app.patch('/api/v1/red-flags/:id/location', (req, res, next) => {
+router.patch('/api/v1/red-flags/:id/location', (req, res, next) => {
   const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
   if (!incident) {
     next();
@@ -67,13 +74,13 @@ app.patch('/api/v1/red-flags/:id/location', (req, res, next) => {
     incidents: [
       {
         id: incident.id,
-        message: 'Location has been successfully updated',
+        message: 'location has been successfully updated',
       },
     ],
   });
 });
 
-app.patch('/api/v1/red-flags/:id/comment', (req, res, next) => {
+router.patch('/api/v1/red-flags/:id/comment', (req, res, next) => {
   const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
   if (!incident) {
     next();
@@ -90,7 +97,7 @@ app.patch('/api/v1/red-flags/:id/comment', (req, res, next) => {
   });
 });
 
-app.delete('/api/v1/red-flags/:id', (req, res, next) => {
+router.delete('/api/v1/red-flags/:id', (req, res, next) => {
   const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
   if (!incident) {
     next();
@@ -103,50 +110,31 @@ app.delete('/api/v1/red-flags/:id', (req, res, next) => {
     incidents: [
       {
         id: incident.id,
-        messsage: 'record successfully deleted',
+        message: 'record deleted successfully',
       },
     ],
   });
 });
 
-// user api
-
-app.post('/api/v1/user', (req, res, next) => {
-  const id = User.users.length;
-  const user = {
-    id,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    othername: req.body.othername,
-    phoneNumber: req.body.phonenumber,
-    registered: req.body.date,
-    username: req.body.username,
-    email: req.body.email,
-  };
-  if (!user) {
+router.patch('/api/v1/red-flags/:id', (req, res, next) => {
+  const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
+  if (!incident) {
     next();
   }
-  User.users.push(user);
+  incident.location = req.body.location;
+  incident.comment = req.body.comment;
+  incident.title = req.body.title;
+  incident.type = req.body.type;
+
   res.json({
     status: res.statusCode,
-    users: [
+    incidents: [
       {
-        id,
-        message: 'user has been registered successfully',
+        id: incident.id,
+        message: 'redcord has been successfully updated',
       },
     ],
   });
 });
 
-
-app.use((req, res, next) => {
-  next(new Error('error occured'));
-});
-
-app.use(middleware);
-
-
-const port = process.env.PORT || 4001;
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
-module.exports = app;
+module.exports = router;
