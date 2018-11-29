@@ -1,11 +1,14 @@
 {
-  "name": "y",
+  "name": "ireport",
   "version": "1.0.0",
   "description": "ireporter web app",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
     "test": "mocha"
+  },
+  "engines": {
+    "node": "10.6.0"
   },
   "repository": {
     "type": "git",
