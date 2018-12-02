@@ -1,11 +1,10 @@
-body {
-    background-color: #058a83;
-}
   
-
 div.landing-nav{
-    position: relative;
+    position: absolute;
     z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
     margin: 0;
     padding: 0;
     background: #058a83;
@@ -18,7 +17,7 @@ div.landing-nav ul{
 
 div.landing-nav a{
   text-decoration: none;
-  display: block;
+  display: inline block;
   padding: 10px;
   color: #fff;
 }
@@ -28,15 +27,15 @@ div.landing-nav a:hover{
   font-size: 18px
 }
 .slideshow { 
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
-  top: 1;
+  top: 0;
   left: 0;
   z-index: 0;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 10;
 }
 
 .slideshow li { 
@@ -54,14 +53,14 @@ div.landing-nav a:hover{
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(../assets/crisis-intervention.jpg) 
+  background-image: url(../assets/crisis-intervent.jpg) 
 }
 .slideshow li:nth-child(2) { 
   background-image: url(../assets/CrimeReport.jpg);
   animation-delay: 10s; 
 }
 .slideshow li:nth-child(3) { 
-  background-image: url(../assets/corruption.jpg);
+  background-image: url(../assets/corruption-ts.jpg);
   animation-delay: 20s; 
 }
 .slideshow li:nth-child(4) { 
@@ -90,11 +89,22 @@ div.landing-nav a:hover{
   }
 }
 
-/* Older browser support - class added by modernizr */
-.no-cssanimations .slideshow li {
-    opacity: 1;
+.report-case {
+  top: 5px;
+  left: 20px;
+  position: absolute;
+  background: #012523;
+  width: 120px;
+  padding: 10px;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  z-index: 2;
 }
 
+a.report-case{
+  text-decoration: none;
+}
 
 @media screen and (min-width: 700px){
     
@@ -107,4 +117,5 @@ div.landing-nav a:hover{
       padding: 20px;
       text-align: center;
   }
+ 
 }

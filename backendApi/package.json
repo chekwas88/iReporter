@@ -1,5 +1,5 @@
 {
-  "name": "ireport",
+  "name": "ireport-api",
   "version": "1.0.0",
   "description": "ireporter web app",
   "main": "app.js",
@@ -24,14 +24,15 @@
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "nodemon": "^1.18.6"
-  },
-  "dependencies": {
+    "nodemon": "^1.18.6",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "joi": "^14.3.0",
-    "mocha": "^5.2.0",
     "request": "^2.88.0"
   }
 }

@@ -1,5 +1,5 @@
 /* sign-up and sign-in forms */
-.container{
+.form-container{
     width: 80%;
     margin: 0 auto;
 }
@@ -89,7 +89,7 @@ input[type="file"]{
   
   @media screen and (min-width: 600px){
     form{
-        max-width: 40%;
+        max-width: 50%;
     }
   }
 

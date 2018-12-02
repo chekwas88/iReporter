@@ -15,11 +15,11 @@
 
 .record{
     
-    padding: 1rem;
+    padding: 10px;
     border: 1px solid #f4f8f8;
-    border-bottom: none;
     border-radius: 2px;
     box-sizing: border-box;
+    margin-bottom: 30px;
 }
 .singleton{
     width: 80%;
@@ -27,20 +27,21 @@
 }
 
 .button-display{
-    margin-top: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .singleton a button{
-    width: 100px;
-    font-size: 1.2rem;
+   
+    font-size: 16px;
     padding: 10px;
+    width: 70px;
     text-align: center;
     border: none;
     cursor: pointer;
 }
 
 a.delete button{
-    float: right;
     border-radius: 4px;
     color: #fff;
     background: #f72828
@@ -50,6 +51,7 @@ a.edit button{
     background: #f76a28;
     border-radius: 4px;
     color: #fff;
+    margin-bottom: 10px;
 }
 
 .singleton:after{
@@ -58,12 +60,30 @@ a.edit button{
     clear: both;
 }
 
-.status{
-    display: flex;
-    border-bottom: 1px solid #058a83;
-}
 
-.status .status-check{
-    flex: 1 0 auto;
-    margin-bottom: 20px;
+@media screen and (min-width: 600px){
+    .singleton a button{
+        width: 100px;
+        font-size: 1.2rem;
+    }
+
+    a.delete button{
+        float: right;
+        border-radius: 4px;
+        color: #fff;
+        background: #f72828
+    }
+    
+    a.edit button{
+        background: #f76a28;
+        border-radius: 4px;
+        color: #fff;
+        margin-bottom: 0;
+    }
+    
+    .singleton:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
 }
