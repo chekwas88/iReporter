@@ -1,0 +1,49 @@
+<% include ../partials/header %>
+<div class="container">
+
+    <form class="form-class record-form">
+        <h2>Report a case</h2>
+        <div class="input-full">
+            <select id="records" name="type">
+                <option value="red-flag">Red-flag</option>
+                <option value="intervention">Intervention</option>
+            </select>
+        </div>
+        <div class="input-full">
+            <label for="location"></label>
+            <input id="location" type="text" name="location" placeholder="Location e.g Surulere, Lagos">
+        </div>
+
+        <div class="input-full">
+            <label for="title"></label>
+            <input id="title" type="text" name="title" placeholder="title">
+        </div>
+
+
+
+        <div class="input-full">
+            <label class="desc" for="message">Description:</label>
+            <textarea name="comment" id="message" rows="15"></textarea>
+
+        </div>
+
+
+        <div class="input-full">
+            <label for="date"></label>
+            <input id="date" type="date" name="registered">
+
+        </div>
+
+        <div class="input-full">
+            <label for="submit"></label>
+            <input id="submit" type="submit" value="submit">
+
+        </div>
+
+
+
+    </form>
+</div>
+</body>
+
+</html>
