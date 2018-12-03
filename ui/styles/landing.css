@@ -23,8 +23,9 @@ div.landing-nav a{
 }
 
 div.landing-nav a:hover{
-  color: #41f71c;
-  font-size: 18px
+  font-size: 18px;
+  border-radius: 6px;
+  color: #0eb7eb;
 }
 .slideshow { 
   position: absolute;
