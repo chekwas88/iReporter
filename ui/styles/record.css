@@ -1,5 +1,5 @@
 .show{
-    width: 90%;
+    width: 60%;
     margin: 0 auto;
 }
 
@@ -7,8 +7,10 @@
     height: 15rem;
     text-align: center;
     padding: 20px;
-    border: #f4f8f8 1px solid;
+    border: #cbcfcf 1px solid;
     box-sizing: border-box;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 
@@ -16,7 +18,7 @@
 .record{
     
     padding: 10px;
-    border: 1px solid #f4f8f8;
+    border: 1px solid #dcdfdf;
     border-radius: 2px;
     box-sizing: border-box;
     margin-bottom: 30px;
