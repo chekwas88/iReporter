@@ -27,34 +27,34 @@
 
         <form class="form-class record-form">
             <h2>Report a case</h2>
-            <div class="input-full">
+            <div class="select-status">
                 <select id="records" name="type">
                     <option value="red-flag">Red-flag</option>
                     <option value="intervention">Intervention</option>
                 </select>
             </div>
             <div class="input-full">
-                <label for="location"></label>
-                <input id="location" type="text" name="location" placeholder="Location e.g Surulere, Lagos">
+                <label for="location">Location</label>
+                <input id="location" type="text" name="location" placeholder="Location e.g Surulere, Lagos" required>
             </div>
 
             <div class="input-full">
-                <label for="title"></label>
-                <input id="title" type="text" name="title" placeholder="title">
+                <label for="title">Title</label>
+                <input id="title" type="text" name="title" required>
             </div>
 
 
 
             <div class="input-full">
-                <label class="desc" for="message">Description:</label>
-                <textarea name="comment" id="message" rows="15"></textarea>
+                <label for="message">Description</label>
+                <textarea name="comment" id="message" rows="15" required></textarea>
 
             </div>
 
 
             <div class="input-full">
                 <label for="date"></label>
-                <input id="date" type="date" name="registered">
+                <input id="date" type="date" name="registered" required>
 
             </div>
 
