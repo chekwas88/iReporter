@@ -12,7 +12,7 @@ body{
     
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: #35475e;
+    background-color: #d9e6f7;
     border-radius: 4px;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -21,6 +21,7 @@ body{
 .user-content{
     width: 80%;
     margin: 0 auto;
+    color: #01070a;
     
 }
 .user-content em{
@@ -49,6 +50,7 @@ h1{
 
 .cases p:nth-child(2){
     padding-left: 20px;
+    color: #8d6a0a
 }
 .read-more a{
     text-decoration: none;

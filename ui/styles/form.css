@@ -1,4 +1,4 @@
-/* sign-up and sign-in forms */
+/* sign-up, new record and sign-in forms */
 .form-container{
     width: 80%;
     margin: 0 auto;
@@ -21,6 +21,11 @@ form h1{
     text-align:center;
     font-size:30px;
     color:#0a8d84;     
+}
+.select-status {
+    overflow: hidden;
+    position:relative;
+    border:1px solid #ccc;
 }
 
 .input-full{
