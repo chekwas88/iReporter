@@ -1,2 +1,112 @@
 
+  .form-container{
+    width: 80%;
+    margin: 0 auto;
+}
+
+form {
+    background: #fff;
+    padding: 1em 4em 2em;
+    max-width: 30%;
+    margin: 20px auto 0;
+    box-shadow: 0 0 .2em #012523;
+    border-radius: 2px;
+
+}
+
+form h1{
+     
+    margin:0 0 20px 0;
+    padding:10px;
+    text-align:center;
+    font-size:30px;
+    color:#0a8d84;     
+}
+
+.input-full{
+    box-sizing: border-box;
+}
+
+.input-full input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    margin-top: 10px;;
+  }
+
+  .input-full textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    margin-top: 12px;
+    border: 1px solid #60bebe;
+    border-radius: 2px;
+  }
+
+  .form-class .input-full{
+    margin: 0 0 1em 0;
+    position: relative;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  input[type="submit"],
+  input[type="password"]{
+    border: 1px solid #60bebe;
+    font-size: 1.2em;
+    padding: .5em .5em;
+    border-radius: 2px;
   
+  }
+
+  input[type="submit"]{
+      background: #012523;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+  }
+  input[type="submit"]:hover{
+    cursor: pointer;
+    background: #058a83;
+}
+
+.check{
+   padding-bottom: 10px;
+   
+}
+
+input[type="file"]{
+    margin-top: .5rem;
+}
+.input-full label {
+    font-size: 1.3rem; 
+}
+.select-status {
+    overflow: hidden;
+    position:relative;
+    border-radius: 5px;
+    border:1px solid #ccc;
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+
+.select-status select {
+    
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px; 
+    width: 150px;
+  }
+
+
+  
+  @media screen and (min-width: 600px){
+    form{
+        max-width: 50%;
+    }
+  }
+
