@@ -32,7 +32,7 @@ form h1{
     box-sizing: border-box;
     width: 100%;
     outline: none;
-    margin:0;
+    margin-top: 10px;;
   }
 
   .input-full textarea {
@@ -41,6 +41,8 @@ form h1{
     width: 100%;
     outline: none;
     margin-top: 12px;
+    border: 1px solid #60bebe;
+    border-radius: 2px;
   }
 
   .form-class .input-full{
@@ -75,15 +77,30 @@ form h1{
    
 }
 
-label.desc{
-    font-size: 1.3rem;
-    margin-bottom: 12px;
-    
-}
-
 input[type="file"]{
     margin-top: .5rem;
 }
+.input-full label {
+    font-size: 1.3rem; 
+}
+.select-status {
+    overflow: hidden;
+    position:relative;
+    border-radius: 5px;
+    border:1px solid #ccc;
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+
+.select-status select {
+    
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px; 
+    width: 150px;
+  }
 
 
   
