@@ -9,7 +9,6 @@ const router = express.Router();
 
 router.post('/api/v1/users', (req, res, next) => {
   const id = User.users.length;
-
   const schema = {
     firstname: Joi.string().required(),
     lastname: Joi.string().required(),
