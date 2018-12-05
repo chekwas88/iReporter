@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="./styles/admin.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="./styles/landing.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+  <script src="main.js"></script>
+</head>
+
+<body>
+
+  <nav class="start">
+    <a href="./index.html">Back to homepage</a>
+  </nav>
+
+  <h2>Admin Dashboard</h2>
+
+  <div class="wrapper">
+
+    <div class="table">
+
+      <div class="header ">
+        <div class="cell">
+          Users
+        </div>
+        <div class="cell">
+          Title
+        </div>
+        <div class="cell">
+          Comment
+        </div>
+        <div class="cell">
+          Location
+        </div>
+        <div class="cell">
+          Status
+        </div>
+        <div>Action</div>
+
+      </div>
+
+      <div class="row">
+        <div class="cell" data-title="User">
+          Victor Chuks
+        </div>
+        <div class="cell" data-title="Title">
+          Money Laundering
+        </div>
+        <div class="cell" data-title="Comment">
+          A government official has laundered money
+        </div>
+        <div class="cell" data-title="Location">
+          warri Delta state
+        </div>
+        <div class="cell select-status" data-title="Status">
+          <select id="report-status" name="status">
+            <option value="draft">Draft</option>
+            <option value="investigating">Investigating</option>
+            <option value="rejected">rejected</option>
+            <option value="resolved">Resolved</option>
+          </select>
+
+        </div>
+        <div class="cell">
+          <button class="delete-button">Delete</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="cell" data-title="User">
+          Joseph Smith
+        </div>
+        <div class="cell" data-title="Title">
+          fallen electric pole
+        </div>
+        <div class="cell" data-title="Comment">
+          <p>An electric pole has falen at Ago palace way, okota</p>
+        </div>
+        <div class="cell" data-title="Location">
+          Lagos, Ago palace way.
+        </div>
+        <div class="cell select-status" data-title="Status">
+          <select id="report-status" name="status">
+            <option value="draft" selected>Draft</option>
+            <option value="investigating">Investigating</option>
+            <option value="rejected">rejected</option>
+            <option value="resolved">Resolved</option>
+          </select>
+        </div>
+        <div class="cell">
+          <button class="delete-button">Delete</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="cell" data-title="User">
+          Oluwatobi Seun
+        </div>
+        <div class="cell" data-title="Title">
+          Fallen pole
+        </div>
+        <div class="cell" data-title="Comment">
+          <p>An electric pole has falen at Ago palace way, okota</p>
+        </div>
+        <div class="cell" data-title="Location">
+          lagos, Ago palace way
+        </div>
+        <div class="cell select-status" data-title="Status">
+          <select id="report-status" name="status">
+            <option value="draft" selected>Draft</option>
+            <option value="investigating">Investigating</option>
+            <option value="rejected">rejected</option>
+            <option value="resolved">Resolved</option>
+          </select>
+        </div>
+        <div class="cell">
+          <button class="delete-button">Delete</button>
+        </div>
+      </div>
+
+    </div>

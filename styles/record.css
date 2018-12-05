@@ -1,0 +1,91 @@
+.show{
+    width: 60%;
+    margin: 0 auto;
+}
+
+.mapd{
+    height: 15rem;
+    text-align: center;
+    padding: 20px;
+    border: #cbcfcf 1px solid;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+
+.record{
+    
+    padding: 10px;
+    border: 1px solid #dcdfdf;
+    border-radius: 2px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+.singleton{
+    width: 80%;
+    margin: 10px auto;
+}
+
+.button-display{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.singleton a button{
+   
+    font-size: 16px;
+    padding: 10px;
+    width: 70px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+a.delete button{
+    border-radius: 4px;
+    color: #fff;
+    background: #f72828
+}
+
+a.edit button{
+    background: #f76a28;
+    border-radius: 4px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.singleton:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+
+@media screen and (min-width: 600px){
+    .singleton a button{
+        width: 100px;
+        font-size: 1.2rem;
+    }
+
+    a.delete button{
+        float: right;
+        border-radius: 4px;
+        color: #fff;
+        background: #f72828
+    }
+    
+    a.edit button{
+        background: #f76a28;
+        border-radius: 4px;
+        color: #fff;
+        margin-bottom: 0;
+    }
+    
+    .singleton:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
+}
