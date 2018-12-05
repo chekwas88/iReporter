@@ -1,20 +1,15 @@
 {
-  "name": "ireporter",
+  "name": "ireport-api",
   "version": "1.0.0",
-  "description": "iReporter web app \r The users of this app can be able to report corruption incidents or cases to the appropriate authorities.\r The users can also bring to notice the things that needs government or its relevant authority intervention.",
-  "main": "index.js",
-  "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.16.4"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.7",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
-  },
+  "description": "ireporter web app",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon ./server/app.js --exec babel-node --presets babel-preset-env ",
+    "test": "nyc mocha - -timeout 10000 - -require babel-register ./server/test/test.js - -exit",
+    "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls"
+  },
+  "engines": {
+    "node": "10.6.0"
   },
   "repository": {
     "type": "git",
@@ -25,5 +20,27 @@
   "bugs": {
     "url": "https://github.com/chekwas88/iReporter/issues"
   },
-  "homepage": "https://github.com/chekwas88/iReporter#readme"
+  "homepage": "https://github.com/chekwas88/iReporter#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.6",
+    "nyc": "^13.1.0"
+  },
+  "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "ejs": "^2.6.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "express": "^4.16.4",
+    "joi": "^14.3.0",
+    "mocha": "^5.2.0",
+    "request": "^2.88.0"
+  }
 }

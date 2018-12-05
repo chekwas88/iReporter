@@ -1,12 +1,12 @@
-const express = require('express');
-const middleware = require('./middleware/middleware');
-const incidentApi = require('./api/incident');
-const userApi = require('./api/user');
+import express, { json } from 'express';
+import middleware from './middleware/middleware';
+import incidentApi from './api/incident';
+import userApi from './api/user';
 
 
 const app = express();
 
-app.use(express.json());
+app.use(json());
 app.use(incidentApi);
 app.use(userApi);
 app.use((req, res, next) => {
@@ -17,4 +17,4 @@ app.use(middleware);
 const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-module.exports = app;
+export default app;
