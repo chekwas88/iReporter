@@ -1,32 +1,46 @@
   
-div.landing-nav{
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background: #058a83;
+*{
+  box-sizing: border-box;
 }
 
-div.landing-nav ul{
-  list-style: none;
+body{
+  margin: 0;
   padding: 0;
 }
 
-div.landing-nav a{
+nav {
+  position: absolute;
+  width: 100%;
+  background: #058a83;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 3;
+}
+
+nav ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
+
+
+
+nav.start li a{
   text-decoration: none;
-  display: inline block;
-  padding: 10px;
+  display: inline-block;
+  padding: 20px;
   color: #fff;
 }
 
-div.landing-nav a:hover{
+nav.start li a:hover{
+  background: #0eb7eb;
   font-size: 18px;
   border-radius: 6px;
-  color: #0eb7eb;
 }
+
 .slideshow { 
   position: absolute;
   width: 100%;
@@ -91,32 +105,39 @@ div.landing-nav a:hover{
 }
 
 .report-case {
-  top: 5px;
-  left: 20px;
+  top: 50%;
+  left: 40%;
   position: absolute;
   background: #012523;
-  width: 120px;
-  padding: 10px;
+  width: 200px;
+  height: 80px;
+  font-size: 1.2rem;
+  padding: 30px 10px;
+  text-decoration: none;
+  text-align: center;
   border: none;
   color: #fff;
   border-radius: 4px;
-  z-index: 2;
+  z-index: 4;
 }
 
-a.report-case{
-  text-decoration: none;
+.report-case:hover{
+  background: #058a83;
 }
 
-@media screen and (min-width: 700px){
-    
-  div.landing-nav ul{
+
+
+@media screen and (min-width: 600px) {
+
+  nav.start ul{
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
   }
 
-  div.landing-nav a{
-      padding: 20px;
-      text-align: center;
+  .status-state{
+      display: inline-block;
+      padding-left: 10px;
   }
  
+
 }
