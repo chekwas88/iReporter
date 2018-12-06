@@ -23,16 +23,16 @@ form h1{
     color:#0a8d84;     
 }
 
-.input-full{
-    box-sizing: border-box;
-}
 
+.input-full{
+    padding: 10px 0;
+}
 .input-full input {
     display: block;
     box-sizing: border-box;
     width: 100%;
     outline: none;
-    margin-top: 10px;;
+    margin-top: 15px;
   }
 
   .input-full textarea {
@@ -80,8 +80,8 @@ form h1{
 input[type="file"]{
     margin-top: .5rem;
 }
-.input-full label {
-    font-size: 1.3rem; 
+label {
+    font-size: 1.3rem;
 }
 .select-status {
     overflow: hidden;
@@ -90,6 +90,7 @@ input[type="file"]{
     border:1px solid #ccc;
     width: 150px;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 
