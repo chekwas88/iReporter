@@ -13,4 +13,4 @@ const Incident = {
   ],
 };
 
-module.exports = Incident;
+export default Incident;
