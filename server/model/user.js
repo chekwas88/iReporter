@@ -8,7 +8,7 @@ const User = {
       othername: 'prince',
       username: 'chekwas88',
       email: 'princechekwas@gmail.com',
-      admin: 'true',
+      admin: true,
 
     },
 
