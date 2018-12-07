@@ -7,14 +7,15 @@ import data from '../model/incident';
 
 use(chaihttp);
 
-describe('/GET red-flags', () => {
-  it('it should GET all the red-flags', (done) => {
+describe('/GET all red-flags', () => {
+  it('it should return all red-flags', (done) => {
     request(app)
-      .get('api/v1/red-flags')
+      .get('/api/v1/red-flags')
       .end((err, res) => {
-        if (err) done(err);
-        assert.isArray(data.incidents, 'incidents is not of type array');
-        assert.equal(res.statusCode, 200, 'request was unsuccessful');
+        if (err) done();
+        assert.exists(data.incidents, 'incidents does not exist');
+        assert.isArray(data.incidents, 'incident is not an array');
+        assert.equal(res.status, 200, 'request was not successful');
       });
     done();
   });
