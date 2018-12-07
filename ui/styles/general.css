@@ -10,14 +10,19 @@ nav {
     position: relative;
     width: 100%;
     background: #058a83;
-    z-index: 3;
+    z-index: 2;
 }
+
+
 
 nav ul{
     list-style: none;
     padding: 0;
     margin: 0;
     
+}
+span i{
+    display: none;
 }
 
 
@@ -26,6 +31,13 @@ nav.start li a{
     text-decoration: none;
     display: inline-block;
     padding: 20px;
+    color: #fff;
+}
+
+ul a button{
+    padding: 20px;
+    border: none;
+    background: #011615;
     color: #fff;
 }
 
@@ -51,6 +63,19 @@ span.faint{
     nav.start ul{
         display: flex;
         justify-content: center;
+    }
+    span.icon{
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        z-index: 3;
+        color: #67e711;
+        font-size: 22px;
+        
+    }
+    span i{
+        padding-right: 10px;
+         
     }
 
     .status-state{
