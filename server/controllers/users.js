@@ -3,14 +3,11 @@ import User from '../model/user';
 export default {
   /**
   * @function registerUser -registers a user
-  * @function getUser - gets a registered user
   * @param {object} req - request object
   * @param {object} res - a response object
   * @returns {object} json data
   */
 
-
-  // register user
   registerUser: (req, res) => {
     const id = User.users.length;
     const admin = false;
@@ -39,7 +36,13 @@ export default {
     });
   },
 
-  // get registered user
+
+  /**
+  * @function getUser - gets a registered user
+  * @param {object} req - request object
+  * @param {object} res - a response object
+  * @returns {object} json data
+  */
   getUser: (req, res) => {
     const user = User.users.find(u => u.id === parseInt(req.params.id, 10));
     if (!user) {

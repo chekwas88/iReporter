@@ -3,16 +3,10 @@ import Incident from '../model/incident';
 export default {
   /**
    * @function getIncidents - returns all created incidents
-   * @function getIncident - returns an incident
-   * @function createIncident - creates an incident
-   * @function updateLocation - updates an incident's  location
-   * @function updateComment - updates an incident's comment
-   * @function deleteIncident - deletes an incident
-   * @function updateAll - update an incident
    * @param {object} req - request object
    * @param {object} res - response object
    * @returns {object} json data
-   */
+  */
 
   getIncidents: (req, res) => {
     if (!Incident.incidents) {
@@ -25,6 +19,14 @@ export default {
     Incident.status = status;
     return res.send(Incident);
   },
+
+
+  /**
+  *  @function createIncident - creates an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+ */
 
   createIncident: (req, res) => {
     const id = Incident.incidents.length;
@@ -52,6 +54,13 @@ export default {
     });
   },
 
+  /**
+   * @function getIncident - returns an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+ */
+
   getIncident: (req, res) => {
     const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
     if (!incident) {
@@ -67,6 +76,13 @@ export default {
       ],
     });
   },
+
+  /**
+   * @function updateLocation - updates an incident's  location
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+ */
 
   updateLocation: (req, res) => {
     const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
@@ -88,6 +104,13 @@ export default {
     });
   },
 
+  /**
+   * @function updateComment - updates an incident's comment
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+ */
+
   updateComment: (req, res) => {
     const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
     if (!incident) {
@@ -107,6 +130,13 @@ export default {
       ],
     });
   },
+
+  /**
+   * @function deleteIncident - deletes an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+ */
 
   deleteIncident: (req, res) => {
     const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));
@@ -129,6 +159,13 @@ export default {
       ],
     });
   },
+
+  /**
+   * @function updateAll - update an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+ */
 
   updateAll: (req, res) => {
     const incident = Incident.incidents.find(i => i.id === parseInt(req.params.id, 10));

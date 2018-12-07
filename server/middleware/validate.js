@@ -2,13 +2,13 @@ import Joi from 'joi';
 
 export default {
   /**
+   * @function  validatePost - check for input validation before creating an incident
    * @param {object} req - request object
    * @param {object} res - response object
    * @returns {object} json data
    *
    * */
 
-  // validate data for posting incident
 
   validatePost: (req, res, next) => {
     const schema = {
@@ -22,7 +22,6 @@ export default {
 
     const schemaReturn = Joi.validate(req.body, schema);
     if (schemaReturn.error) {
-      console.log(schemaReturn.error);
       return res.status(400).send({
         status: 400,
         message: schemaReturn.error.details[0].message,
@@ -31,8 +30,14 @@ export default {
     return next();
   },
 
-  // validate data for patching comment
 
+  /**
+  * @function  validatePatchComment - validate comment before patching
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
   validatePatchComment: (req, res, next) => {
     const schema = {
       comment: Joi.string().required(),
@@ -45,7 +50,15 @@ export default {
     }
     return next();
   },
-  // validate data for patching comment
+
+
+  /**
+ * @function  validatePatchLocation - validate location before patching
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @returns {object} json data
+ *
+ * */
 
   validatePatchLocation: (req, res, next) => {
     const schema = {
@@ -60,7 +73,14 @@ export default {
     return next();
   },
 
-  // validate data for updating  incident
+
+  /**
+ * @function  validatePatchEdit - validate incident's inputs before patching
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @returns {object} json data
+ *
+ * */
   validatePatchEdit: (req, res, next) => {
     const schema = {
       type: Joi.string(),
@@ -77,6 +97,14 @@ export default {
     }
     return next();
   },
+
+  /**
+   * @function   validateUser - check for input validation before registering a user
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} json data
+   *
+   * */
 
   validateUser: (req, res, next) => {
     const schema = {
