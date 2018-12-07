@@ -7,6 +7,18 @@ body{
     background: #fff;
     padding: 20px;;
 }
+.profile-image{
+    padding-left: 10px;
+}
+  img{
+    width: 20%;
+    margin-bottom: 20px;
+    border: 1px solid #0F2027;
+    display: block;
+    border-radius: 50%;
+    
+
+}
 
 .user{
     
@@ -23,12 +35,21 @@ body{
 .user-content{
     margin: 0 auto;
     color: #fff;
-    padding-left: 10%;
+    padding-left: 10px;
+    
     
 }
 
-.user-content p span{
-    display: block;
+
+.user-content p span:nth-child(2){
+    display: inline-block;
+    padding-left: 5%;
+    
+    
+}
+
+.user-content p em{
+    padding-left: 5%;
 }
 
 .list{
@@ -65,9 +86,11 @@ h1{
 
 @media screen and (min-width: 600px) {
     .user-content{
-       margin: 0 auto;
-       padding-left: 10%;
+        margin: 0 auto;
         width: 70%;
+        font-size: 18px;
+        font-weight: 400;
+        
             
     }
 
@@ -75,6 +98,9 @@ h1{
         display: inline-block;
         padding-right: 10px;
         text-align: center;
+    }
+    img{
+        margin: 0 auto;
     }
 
 }
@@ -85,11 +111,24 @@ h1{
         width: 65%;
         
     }
+    .user-content p span:nth-child(1){
+        font-size: 20px;
+        font-weight: 400;
+     }
     .user-content{
         margin: 0 auto;
-        padding-left: 20%;
-         width: 70%;
-             
+        width: 90%;
+        text-align: center;
+     }
+     .profile-detail{
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+
+     }
+
+     .profile-detail p:nth-child(3){
+        padding-left: 50px;
      }
      
 }
@@ -102,7 +141,6 @@ h1{
     }
     .user-content{
         margin: 0 auto;
-        padding-left: 20%;
-         width: 80%;
+         width: 90%;
     }
 }

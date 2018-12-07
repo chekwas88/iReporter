@@ -13,10 +13,17 @@ nav {
     z-index: 2;
 }
 
+nav.admin-nav ul{
+    padding: 0;
+    margin: 0; 
+}
 
-
-
-nav.start a{
+nav.admin-nav ul li{
+    list-style: none;
+    padding: 0;
+    margin: 0; 
+}
+nav.admin-nav a{
     text-decoration: none;
     display: inline-block;
     padding: 20px;
@@ -24,7 +31,7 @@ nav.start a{
     
 }
 
-nav.start a:hover{
+nav.admin-nav a:hover{
     background: #0eb7eb;
     font-size: 18px;
     border-radius: 6px;
@@ -36,7 +43,7 @@ h2{
     position: absolute;
     z-index: 3;
     top: 10px;
-    left: 50%;
+    left: 40%;
     text-align: center;
     color: #fff;
 }
@@ -109,6 +116,10 @@ h2{
       background: #520303
   }
 
+  span i{
+    display: none;
+}
+
 
 @media screen and (max-width: 580px){
     .table {
@@ -122,5 +133,27 @@ h2{
     .cell{
         padding: 2px 16px;
         display: block;
+    }
+} 
+
+@media screen and (min-width: 600px){
+    nav.admin-nav ul{
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    span.icon{
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        z-index: 3;
+        color: #67e711;
+        font-size: 22px;
+        
+    }
+
+    span i{
+        padding-right: 10px;
+         
     }
 }    
