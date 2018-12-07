@@ -6,6 +6,8 @@
   "scripts": {
     "start": "nodemon ./server/app.js --exec babel-node --presets babel-preset-env ",
     "test": "mocha ./server/test/ --require babel-register --exit",
+    "build": "babel server -d dist",
+    "serve": "node sever/app.js",
     "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls"
   },
   "engines": {
