@@ -17,8 +17,8 @@ app.patch('/api/v1/red-flags/:id', validate.validatePatchEdit, incidents.updateA
 
 
 // users endpoints
-app.post('/api/v1/users', validate.validateUser, users.registerUser);
-app.get('/api/v1/users/:id', users.getUser);
+app.post('/users/register', validate.validateUser, users.registerUser);
+app.post('/auth/users/login', users.login);
 
 const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Listening on port ${port}`));

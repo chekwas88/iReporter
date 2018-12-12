@@ -113,6 +113,7 @@ export default {
       othername: Joi.string(),
       email: Joi.string().required(),
       username: Joi.string().required(),
+      password: Joi.string().min(6).required(),
       phoneNumber: Joi.string().required(),
       registered: Joi.string(),
     };
