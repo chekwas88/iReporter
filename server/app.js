@@ -1,11 +1,12 @@
 import express, { json } from 'express';
 import incidents from './controllers/incident';
-import users from './controllers/users';
+import usersRoute from './routes/users';
 import validate from './middleware/validate';
 
 const app = express();
 
 app.use(json());
+app.use(usersRoute);
 // incidents endpoints
 app.get('/api/v1/red-flags', incidents.getIncidents);
 app.post('/api/v1/red-flags', validate.validatePost, incidents.createIncident);
@@ -17,8 +18,8 @@ app.patch('/api/v1/red-flags/:id', validate.validatePatchEdit, incidents.updateA
 
 
 // users endpoints
-app.post('/users/register', validate.validateUser, users.registerUser);
-app.post('/auth/users/login', users.login);
+// app.post('/users/register', validate.validateUser, users.registerUser);
+// app.post('/auth/users/login', users.login);
 
 const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Listening on port ${port}`));

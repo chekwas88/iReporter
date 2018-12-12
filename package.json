@@ -9,7 +9,9 @@
     "build": "babel server -d dist",
     "serve": "node sever/app.js",
     "createUserTable": " node server/db/db.js createUsersTable",
+    "createITable": " node server/db/db.js createIncidentsTable",
     "dropUserTable": " node server/db/db.js dropUsersTable",
+    "dropITable": " node server/db/db.js dropIncidentsTable",
     "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls"
   },
   "engines": {
