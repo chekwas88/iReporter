@@ -1,6 +1,9 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import createToken from '../middleware/token';
 import bcrypt from '../middleware/verifyPassword';
+import queryUtils from '../queryutils';
+
 
 dotenv.config();
 
@@ -23,35 +26,36 @@ export default {
  */
 
   registerUser: (req, res) => {
-    const createUserText = `INSERT INTO 
-    users(firstname, lastname, email, othername, password, phoneNumber, username) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
-
     const {
       firstname, lastname, email, othername, password, phoneNumber, username,
     } = req.body;
 
     const encrypt = bcrypt.hidePassword(password);
 
-    pool.query(createUserText,
+    pool.query(queryUtils.createUserQuery,
       [firstname, lastname, email, othername, encrypt, phoneNumber, username],
       (err, response) => {
         if (err) {
           console.log(err);
-          return res.status(404).send({
+          return res.status(500).send({
             message: 'An error occured, registration failed',
           });
         }
 
-        // check if email is in database
+        // check if email is i database
         if (response.rows[0].email > 1) {
           return res.status(403).send({
             message: 'This email has been registered before',
           });
         }
+
+        const token = createToken.generateToken({ id: response.rows[0].id });
+
         return res.status(201).json({
           status: res.statusCode,
           id: response.rows[0].id,
           message: 'registered sucessfully',
+          token,
           user: {
             password: response.rows[0].password,
             firstname: response.rows[0].firstname,
@@ -72,9 +76,8 @@ export default {
   * @returns {object} json data
   */
   login: (req, res) => {
-    const loginText = 'SELECT * FROM users WHERE email=$1';
     const { email, password } = req.body;
-    pool.query(loginText, [email], (err, response) => {
+    pool.query(queryUtils.loginQuery, [email], (err, response) => {
       if (err) {
         console.log(err);
         return res.status(404).send({
@@ -96,10 +99,22 @@ export default {
           message: 'Email or password is incorrect',
         });
       }
+
+      console.log(response.rows[0]);
+      const { id, username, isadmin } = response.rows[0];
+      const payload = {
+        id,
+        username,
+        isadmin,
+      };
+
+      const token = createToken.generateToken(payload);
+
       return res.status(200).json({
         status: res.statusCode,
         id: response.rows[0].id,
         message: 'login was successful',
+        token,
         user: {
           firstname: response.rows[0].firstname,
           lastname: response.rows[0].lastname,

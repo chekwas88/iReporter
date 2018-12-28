@@ -12,9 +12,7 @@ export default {
 
   validatePost: (req, res, next) => {
     const schema = {
-      createdBy: Joi.number().required(),
       type: Joi.string(),
-      createdOn: Joi.string().required(),
       title: Joi.string(),
       comment: Joi.string().required(),
       location: Joi.string().required(),

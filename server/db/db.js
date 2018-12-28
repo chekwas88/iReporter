@@ -17,15 +17,15 @@ const createUsersTable = () => {
     `CREATE TABLE IF NOT EXISTS
       users(
         id SERIAL PRIMARY KEY NOT NULL,
-        firstname VARCHAR(128) NOT NULL,
-        lastname VARCHAR(128) NOT NULL,
-        othername VARCHAR(128),
-        username VARCHAR(128) NOT NULL,
-        email VARCHAR(255) NOT NULL UNIQUE,
-        password VARCHAR NOT NULL,
-        phoneNumber VARCHAR NOT NULL,
+        firstname VARCHAR(40) NOT NULL,
+        lastname VARCHAR(40) NOT NULL,
+        othername VARCHAR(40),
+        username VARCHAR(40) NOT NULL,
+        email VARCHAR(128) NOT NULL UNIQUE,
+        password VARCHAR(100) NOT NULL,
+        phoneNumber VARCHAR(100) NOT NULL,
         isAdmin BOOLEAN DEFAULT false,
-        registered TIMESTAMP
+        registered TIMESTAMP WITH TIME ZONE DEFAULT now()
       )`;
 
   pool.query(queryText)
@@ -43,22 +43,16 @@ const createUsersTable = () => {
 const createIncidentsTable = () => {
   const queryText =
     `
-  DROP TYPE IF EXISTS record_type;
-  CREATE TYPE record_type AS ENUM ('red-flag', 'intervention');
-  DROP TYPE IF EXISTS record_status;
-  CREATE TYPE record_status AS ENUM (
-    'draft', 'under-investigation', 'resolved', 'rejected');
   CREATE TABLE IF NOT EXISTS incidents(
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    type record_type,
+    incident_id SERIAL PRIMARY KEY,
+    createdBy INT REFERENCES users(id) ON DELETE CASCADE,
     location VARCHAR(100) NOT NULL,
+    title TEXT NOT NULL,
     images text[],
     videos text[],
     comment TEXT NOT NULL,
-    status record_status DEFAULT 'draft',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    status VARCHAR(100) NOT NULL DEFAULT 'draft',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
     )`;
 
   pool.query(queryText)
