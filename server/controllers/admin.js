@@ -4,13 +4,28 @@ import queryUtils from '../queryutils';
 
 dotenv.config();
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-});
+// const pool = new Pool({
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   port: 5432,
+// });
+let pool;
+if (process.env.NODE_ENV === 'development') {
+  pool = new Pool({
+    connectionString: process.env.DEVDB,
+  });
+  // check for test env
+} else if (process.env.NODE_ENV === 'test') {
+  pool = new Pool({
+    connectionString: process.env.TESTDB,
+  });
+} else {
+  pool = new Pool({
+    connectionString: process.env.PRODUCTIONDB,
+  });
+}
 
 
 export default {
@@ -26,9 +41,9 @@ export default {
     pool.query(queryUtils.getIncidentsQuery, (err, response) => {
       if (err) {
         console.log(err);
-        return res.status(404).json({
-          status: 404,
-          message: 'An error occured, no incident was found',
+        return res.status(500).json({
+          status: res.statusCode,
+          message: 'Internal server error',
         });
       }
       if (isadmin) {
@@ -38,7 +53,7 @@ export default {
           data: response.rows,
         });
       }
-      return res.status(404).json({
+      return res.status(401).json({
         status: res.statusCode,
         message: 'Acess denied, Not Authorized',
       });
@@ -57,7 +72,7 @@ export default {
       });
     }
 
-    return pool.query(queryUtils.updateToInvQuery, [status, incidentId], (err, response) => {
+    return pool.query(queryUtils.updateStatusQuery, [status, incidentId], (err, response) => {
       if (err) {
         console.log(err);
         return res.status(500).json({

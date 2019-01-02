@@ -4,14 +4,30 @@ const { Pool } = require('pg');
 
 dotenv.config();
 
-const pool = new Pool({
-  // connectionString: process.env.DB_URL,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-});
+// const pool = new Pool({
+//   // connectionString: process.env.DB_URL,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   port: 5432,
+// });
+
+let pool;
+if (process.env.NODE_ENV === 'development') {
+  pool = new Pool({
+    connectionString: process.env.DEVDB,
+  });
+  // check for test env
+} else if (process.env.NODE_ENV === 'test') {
+  pool = new Pool({
+    connectionString: process.env.TESTDB,
+  });
+} else {
+  pool = new Pool({
+    connectionString: process.env.PRODUCTIONDB,
+  });
+}
 const createUsersTable = () => {
   const queryText =
     `CREATE TABLE IF NOT EXISTS
@@ -58,7 +74,6 @@ const createIncidentsTable = () => {
   pool.query(queryText)
     .then((res) => {
       console.log(res);
-      pool.end();
     })
     .catch((err) => {
       console.log(err);
@@ -92,10 +107,10 @@ const dropIncidentsTable = () => {
     });
 };
 
-pool.on('remove', () => {
-  console.log('client removed');
-  process.exit(0);
-});
+// pool.on('remove', () => {
+//   console.log('client removed');
+//   process.exit(0);
+// });
 
 
 module.exports = {

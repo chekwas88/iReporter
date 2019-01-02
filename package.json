@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./server/app.js --exec babel-node --presets babel-preset-env ",
-    "test": "mocha ./server/test/ --require babel-register --exit",
+    "test": "cross-env NODE_ENV=test mocha --timeout 15000 ./server/test/ --require babel-register --exit",
     "build": "babel server -d dist",
     "serve": "node sever/app.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon ./server/app.js --exec babel-node --presets babel-presets-env",
     "createUserTable": " node server/db/db.js createUsersTable",
     "createITable": " node server/db/db.js createIncidentsTable",
     "dropUserTable": " node server/db/db.js dropUsersTable",
@@ -28,6 +29,7 @@
   },
   "homepage": "https://github.com/chekwas88/iReporter#readme",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "nodemon": "^1.18.6",
     "nyc": "^13.1.0"
   },

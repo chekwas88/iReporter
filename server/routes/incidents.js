@@ -14,6 +14,7 @@ router.get(
 router.patch(
   '/api/v1/incidents/:id/status',
   tokenVerify.verifyToken,
+  validate.validateIncidentId,
   admin.updateStatus,
 );
 
@@ -33,12 +34,14 @@ router.post(
 router.get(
   '/api/v1/incidents/:id',
   tokenVerify.verifyToken,
+  validate.validateIncidentId,
   incidents.getIncident,
 );
 
 router.patch(
   '/api/v1/incidents/:id/location',
   tokenVerify.verifyToken,
+  validate.validateIncidentId,
   validate.validatePatchLocation,
   incidents.updateLocation,
 );
@@ -46,6 +49,7 @@ router.patch(
 router.patch(
   '/api/v1/incidents/:id/comment',
   tokenVerify.verifyToken,
+  validate.validateIncidentId,
   validate.validatePatchComment,
   incidents.updateComment,
 );
@@ -53,6 +57,7 @@ router.patch(
 router.patch(
   '/api/v1/incidents/:id',
   tokenVerify.verifyToken,
+  validate.validateIncidentId,
   validate.validatePatchEdit,
   incidents.updateAll,
 );
@@ -60,6 +65,7 @@ router.patch(
 router.delete(
   '/api/v1/incidents/:id',
   tokenVerify.verifyToken,
+  validate.validateIncidentId,
   incidents.deleteIncident,
 );
 

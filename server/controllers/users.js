@@ -7,14 +7,29 @@ import queryUtils from '../queryutils';
 
 dotenv.config();
 
-const pool = new Pool({
-  // connectionString: process.env.DB_URL,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-});
+// const pool = new Pool({
+//   // connectionString: process.env.DB_URL,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   port: 5432,
+// });
+let pool;
+if (process.env.NODE_ENV === 'development') {
+  pool = new Pool({
+    connectionString: process.env.DEVDB,
+  });
+  // check for test env
+} else if (process.env.NODE_ENV === 'test') {
+  pool = new Pool({
+    connectionString: process.env.TESTDB,
+  });
+} else {
+  pool = new Pool({
+    connectionString: process.env.PRODUCTIONDB,
+  });
+}
 
 
 export default {
@@ -42,10 +57,11 @@ export default {
           });
         }
 
-        // check if email is i database
+        // check if email is in database
         if (response.rows[0].email > 1) {
-          return res.status(403).send({
-            message: 'This email has been registered before',
+          return res.status(403).json({
+            status: res.statusCode,
+            data: [{ message: 'This email has been registered before' }],
           });
         }
 
@@ -53,17 +69,18 @@ export default {
 
         return res.status(201).json({
           status: res.statusCode,
-          id: response.rows[0].id,
-          message: 'registered sucessfully',
-          token,
-          user: {
-            password: response.rows[0].password,
-            firstname: response.rows[0].firstname,
-            lastname: response.rows[0].lastname,
-            othername: response.rows[0].othername,
-            phoneNumber: response.rows[0].phoneNumber,
-            username: response.rows[0].username,
-          },
+          data: [{
+            id: response.rows[0].id,
+            message: 'user has been registered successfully',
+            token,
+            user: {
+              firstname: response.rows[0].firstname,
+              lastname: response.rows[0].lastname,
+              othername: response.rows[0].othername,
+              phoneNumber: response.rows[0].phoneNumber,
+              username: response.rows[0].username,
+            },
+          }],
         });
       });
   },
@@ -87,8 +104,9 @@ export default {
 
       const user = response.rows[0];
       if (!user) {
-        return res.status(404).send({
-          message: 'User not found',
+        return res.status(401).send({
+          status: res.statusCode,
+          message: 'Email or password is incorrect',
         });
       }
 
@@ -96,11 +114,12 @@ export default {
       const decodedPassword = bcrypt.checkPassword(password, encryptedPassword);
       if (!decodedPassword) {
         return res.status(401).json({
+          status: res.statusCode,
           message: 'Email or password is incorrect',
         });
       }
 
-      console.log(response.rows[0]);
+      // console.log(response.rows[0]);
       const { id, username, isadmin } = response.rows[0];
       const payload = {
         id,
@@ -110,18 +129,20 @@ export default {
 
       const token = createToken.generateToken(payload);
 
-      return res.status(200).json({
+      return res.status(201).json({
         status: res.statusCode,
-        id: response.rows[0].id,
-        message: 'login was successful',
-        token,
-        user: {
-          firstname: response.rows[0].firstname,
-          lastname: response.rows[0].lastname,
-          othername: response.rows[0].othername,
-          phoneNumber: response.rows[0].phoneNumber,
-          username: response.rows[0].username,
-        },
+        data: [{
+          id: response.rows[0].id,
+          message: 'login was successful',
+          token,
+          user: {
+            firstname: response.rows[0].firstname,
+            lastname: response.rows[0].lastname,
+            othername: response.rows[0].othername,
+            phoneNumber: response.rows[0].phoneNumber,
+            username: response.rows[0].username,
+          },
+        }],
       });
     });
   },

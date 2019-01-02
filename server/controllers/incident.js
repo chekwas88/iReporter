@@ -4,13 +4,28 @@ import queryUtils from '../queryutils';
 
 dotenv.config();
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-});
+// const pool = new Pool({
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   port: 5432,
+// });
+let pool;
+if (process.env.NODE_ENV === 'development') {
+  pool = new Pool({
+    connectionString: process.env.DEVDB,
+  });
+  // check for test env
+} else if (process.env.NODE_ENV === 'test') {
+  pool = new Pool({
+    connectionString: process.env.TESTDB,
+  });
+} else {
+  pool = new Pool({
+    connectionString: process.env.PRODUCTIONDB,
+  });
+}
 
 export default {
 
@@ -28,8 +43,8 @@ export default {
       if (err) {
         console.log(err);
         return res.status(404).json({
-          status: 404,
-          message: 'An error occured, no incident was found',
+          status: 500,
+          message: 'Internal server error',
         });
       }
       return res.status(200).json({
@@ -50,7 +65,6 @@ export default {
 
   createIncident: (req, res) => {
     const { location, title, comment } = req.body;
-    console.log(req);
     const { id } = req.user;
 
     pool.query(queryUtils.createIncidentQuery,
@@ -58,15 +72,17 @@ export default {
       (err, response) => {
         if (err) {
           console.log(err);
-          return res.status(400).json({
+          return res.status(500).json({
             status: res.statusCode,
-            message: 'An Error occured, record cannot be created',
+            message: 'Internal server error',
           });
         }
-        return res.status(200).json({
-          id: response.rows[0].id,
-          message: 'Record created successfully',
-          record: response.rows[0],
+        return res.status(201).json({
+          status: res.statusCode,
+          data: [{
+            message: 'Record created successfully',
+            record: response.rows[0],
+          }],
         });
       });
   },
@@ -87,9 +103,9 @@ export default {
       (err, response) => {
         if (err) {
           console.log(err);
-          return res.status(404).json({
+          return res.status(500).json({
             status: res.statusCode,
-            message: 'An error occured could not return incident',
+            message: 'Internal server error',
           });
         }
         if (id !== response.rows[0].createdby) {
@@ -101,8 +117,10 @@ export default {
 
         return res.status(200).json({
           status: res.statusCode,
-          message: 'incident retrieved successfully',
-          incident: response.rows[0],
+          data: [{
+            message: 'record retrieved successfully',
+            record: response.rows[0],
+          }],
         });
       },
     );
@@ -144,16 +162,15 @@ export default {
                 });
               }
               if (id !== createdby) {
-                return res.status(403).json({
+                return res.status(401).json({
                   status: res.statusCode,
                   message: 'You are not authorized to make any change',
                 });
               }
-              console.log(result.rows[0]);
-
               return res.status(200).json({
                 status: res.statusCode,
                 message: 'Location has been updated successfully',
+                data: [result.rows[0]],
               });
             },
           );
@@ -264,11 +281,10 @@ export default {
                   message: 'You are not authorized to make any change',
                 });
               }
-              console.log(result.rows[0]);
-
               return res.status(200).json({
                 status: res.statusCode,
                 message: 'Report has been deleted successfully',
+                deleted: result.rows[0],
               });
             },
           );
@@ -324,7 +340,7 @@ export default {
               }
               return res.status(200).json({
                 status: res.statusCode,
-                message: 'Report has been updated successfully',
+                message: 'Record has been updated successfully',
                 data: [result.rows[0]],
               });
             },

@@ -29,8 +29,6 @@ export default {
       });
     }
     jwt.verify(token, secret, (err, decoded) => {
-      console.log(decoded);
-      console.log(decoded);
       if (err) {
         return res.status(401).json({
           message: 'Error, token not verified',
