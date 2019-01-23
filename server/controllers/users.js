@@ -1,36 +1,11 @@
-import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import con from '../db/db-connection';
 import createToken from '../middleware/token';
 import bcrypt from '../middleware/verifyPassword';
 import queryUtils from '../queryutils';
 
-
+const pool = con();
 dotenv.config();
-
-// const pool = new Pool({
-//   // connectionString: process.env.DB_URL,
-//   host: process.env.DB_HOST,
-//   database: process.env.DB_NAME,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   port: 5432,
-// });
-let pool;
-if (process.env.NODE_ENV === 'development') {
-  pool = new Pool({
-    connectionString: process.env.DEVDB,
-  });
-  // check for test env
-} else if (process.env.NODE_ENV === 'test') {
-  pool = new Pool({
-    connectionString: process.env.TESTDB,
-  });
-} else {
-  pool = new Pool({
-    connectionString: process.env.PRODUCTIONDB,
-  });
-}
-
 
 export default {
   /**
@@ -44,7 +19,6 @@ export default {
     const {
       firstname, lastname, email, othername, password, phoneNumber, username,
     } = req.body;
-
     const encrypt = bcrypt.hidePassword(password);
 
     pool.query(queryUtils.createUserQuery,

@@ -8,11 +8,11 @@
     "test": "cross-env NODE_ENV=test mocha --timeout 15000 ./server/test/ --require babel-register --exit",
     "build": "babel server -d dist",
     "serve": "node sever/app.js",
-    "start:dev": "cross-env NODE_ENV=development nodemon ./server/app.js --exec babel-node --presets babel-presets-env",
+    "start:dev": "cross-env NODE_ENV=development nodemon ./server/app.js --exec babel-node --presets babel-preset-env",
     "createUserTable": " node server/db/db.js createUsersTable",
-    "createITable": " node server/db/db.js createIncidentsTable",
-    "dropUserTable": " node server/db/db.js dropUsersTable",
-    "dropITable": " node server/db/db.js dropIncidentsTable",
+    "createITable": "node server/db/db.js createIncidentsTable",
+    "dropUserTable": "node server/db/db.js dropUsersTable",
+    "dropITable": "node server/db/db.js dropIncidentsTable",
     "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls"
   },
   "engines": {

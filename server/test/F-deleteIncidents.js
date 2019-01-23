@@ -1,23 +1,22 @@
 import {
   describe,
   it,
-  after,
   before,
 } from 'mocha';
 import { use, request, assert } from 'chai';
 import chaihttp from 'chai-http';
 import app from '../app';
+import table from '../db/dropTables';
 
-const { dropIncidentsTable } = require('../db/db');
 
 use(chaihttp);
 
 let token;
-describe('D) Delete incident', () => {
-  after((done) => {
-    dropIncidentsTable();
-    done();
-  });
+describe('F) Delete incident', () => {
+  // after((done) => {
+  //   table.dropIncidentsTable();
+  //   done();
+  // });
   before((done) => {
     request(app)
       .post('/auth/users/login')
@@ -82,4 +81,5 @@ describe('D) Delete incident', () => {
         done(err);
       });
   });
+  table.dropIncidentsTable();
 });

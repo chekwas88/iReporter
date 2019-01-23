@@ -6,7 +6,7 @@ import app from '../app';
 use(chaihttp);
 
 
-describe('POST registration /users/register', () => {
+describe('A) POST registration /users/register', () => {
   const user = {
     firstname: 'Mark',
     lastname: 'Oluwadara',
@@ -170,7 +170,7 @@ describe('POST registration /users/register', () => {
   });
 });
 
-describe('POST login /auth/users/login', () => {
+describe('B) POST login /auth/users/login', () => {
   it('it should login in a user', (done) => {
     request(app)
       .post('/auth/users/login')

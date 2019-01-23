@@ -7,7 +7,7 @@ use(chaihttp);
 
 let token;
 
-describe('B) GET incidents', () => {
+describe('D) GET incidents', () => {
   before((done) => {
     request(app)
       .post('/auth/users/login')

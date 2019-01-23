@@ -7,7 +7,7 @@ use(chaihttp);
 
 let token;
 
-describe('C) PATCH incidents', () => {
+describe('E) PATCH incidents', () => {
   before((done) => {
     request(app)
       .post('/auth/users/login')

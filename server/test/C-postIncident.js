@@ -3,15 +3,12 @@ import { use, request, assert } from 'chai';
 import chaihttp from 'chai-http';
 import app from '../app';
 
-const { createIncidentsTable } = require('../db/db');
-
 use(chaihttp);
 
 let token;
 
-describe('A) POST incidents', () => {
+describe('C) POST incidents', () => {
   before((done) => {
-    createIncidentsTable();
     request(app)
       .post('/auth/users/login')
       .send({ email: 'mark@mail.com', password: 'alternate' })
@@ -117,18 +114,4 @@ describe('A) POST incidents', () => {
         done(err);
       });
   });
-
-  // it('it should delete a given record', (done) => {
-  //   request(app)
-  //     .delete('/api/v1/incidents/1')
-  //     .set('authorization', `Bearer ${token}`)
-  //     .end((err, res) => {
-  //       assert.equal(res.status, 200);
-  //       assert.equal(
-  //         res.body.message,
-  //         'Report has been deleted successfully',
-  //       );
-  //       done(err);
-  //     });
-  // });
 });
