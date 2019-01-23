@@ -21,8 +21,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default {
-  createUsersTestTable: () => {
-    const queryText =
+  createTables: () => {
+    const usersText =
       `CREATE TABLE IF NOT EXISTS
       users(
         id SERIAL PRIMARY KEY NOT NULL,
@@ -35,11 +35,25 @@ export default {
         phoneNumber VARCHAR(100) NOT NULL,
         isAdmin BOOLEAN DEFAULT true,
         registered TIMESTAMP WITH TIME ZONE DEFAULT now()
-      )`;
-
-    pool.query(queryText)
+      );`;
+    const incidentText =
+      `CREATE TABLE IF NOT EXISTS 
+      incidents(
+      incident_id SERIAL PRIMARY KEY,
+      createdBy INT REFERENCES users(id) ON DELETE CASCADE,
+      location VARCHAR(100) NOT NULL,
+      title TEXT NOT NULL,
+      images text[],
+      videos text[],
+      comment TEXT NOT NULL,
+      status VARCHAR(100) NOT NULL DEFAULT 'draft',
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+    );`;
+    const queryTexts = `${usersText}${incidentText}`;
+    pool.query(queryTexts)
       .then((res) => {
         console.log(res);
+        pool.end();
       })
       .catch((err) => {
         console.log(err);
@@ -72,33 +86,6 @@ export default {
         pool.end();
       });
   },
-
-  createIncidentsTable: () => {
-    const queryText =
-      `
-  CREATE TABLE IF NOT EXISTS incidents(
-    incident_id SERIAL PRIMARY KEY,
-    createdBy INT REFERENCES users(id) ON DELETE CASCADE,
-    location VARCHAR(100) NOT NULL,
-    title TEXT NOT NULL,
-    images text[],
-    videos text[],
-    comment TEXT NOT NULL,
-    status VARCHAR(100) NOT NULL DEFAULT 'draft',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
-    )`;
-
-    pool.query(queryText)
-      .then((res) => {
-        console.log(res);
-        pool.end();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-
-
 };
 
 // pool.on('remove', () => {

@@ -13,10 +13,6 @@ use(chaihttp);
 
 let token;
 describe('F) Delete incident', () => {
-  // after((done) => {
-  //   table.dropIncidentsTable();
-  //   done();
-  // });
   before((done) => {
     request(app)
       .post('/auth/users/login')

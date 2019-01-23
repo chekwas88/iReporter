@@ -9,7 +9,7 @@ use(chaihttp);
 
 describe('A) GET index', () => {
   before((done) => {
-    table.createIncidentsTable();
+    table.createTables();
     done();
   });
   it('should return 200 and success message for the / route', (done) => {
