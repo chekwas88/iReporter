@@ -1,5 +1,16 @@
 import Joi from 'joi';
 
+const validateSchema = (request, bodySchema, response, nextAction) => {
+  const schemaReturn = Joi.validate(request.body, bodySchema);
+  if (schemaReturn.error) {
+    return response.status(400).send({
+      status: 400,
+      message: schemaReturn.error.details[0].message,
+    });
+  }
+  return nextAction();
+};
+
 export default {
   /**
    * @function  validatePost - check for input validation before creating an incident
@@ -8,8 +19,6 @@ export default {
    * @returns {object} json data
    *
    * */
-
-
   validatePost: (req, res, next) => {
     const schema = {
       type: Joi.string(),
@@ -17,17 +26,8 @@ export default {
       comment: Joi.string().required(),
       location: Joi.string().required(),
     };
-
-    const schemaReturn = Joi.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        status: 400,
-        message: schemaReturn.error.details[0].message,
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
-
 
   /**
   * @function  validatePatchComment - validate comment before patching
@@ -40,15 +40,8 @@ export default {
     const schema = {
       comment: Joi.string().required(),
     };
-    const schemaReturn = Joi.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        message: schemaReturn.error.details[0].message,
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
-
 
   /**
  * @function  validatePatchLocation - validate location before patching
@@ -57,20 +50,12 @@ export default {
  * @returns {object} json data
  *
  * */
-
   validatePatchLocation: (req, res, next) => {
     const schema = {
       location: Joi.string().required(),
     };
-    const schemaReturn = Joi.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        message: schemaReturn.error.details[0].message,
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
-
 
   /**
  * @function  validatePatchEdit - validate incident's inputs before patching
@@ -86,14 +71,7 @@ export default {
       comment: Joi.string().required(),
       location: Joi.string().required(),
     };
-
-    const schemaReturn = Joi.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        message: schemaReturn.error.details[0].message,
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
 
   /**
@@ -103,7 +81,6 @@ export default {
    * @returns {object} json data
    *
    * */
-
   validateUser: (req, res, next) => {
     const schema = {
       firstname: Joi.string().required(),
@@ -115,15 +92,7 @@ export default {
       phoneNumber: Joi.string().required(),
       registered: Joi.string(),
     };
-
-    const schemaReturn = Joi.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        status: 400,
-        message: schemaReturn.error.details[0].message,
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
   /**
   * @function   validateUserLogin - check for input validation before user login
@@ -139,16 +108,16 @@ export default {
       password: Joi.string().min(6).required(),
     };
 
-    const schemaReturn = Joi.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        status: 400,
-        message: schemaReturn.error.details[0].message,
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
 
+  /**
+  * @function   validateIncidentId - checks for id validation
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
   validateIncidentId: (req, res, next) => {
     if (Number.isNaN(Number(req.params.id))) {
       return res.status(404).send({
