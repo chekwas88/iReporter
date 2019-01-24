@@ -3,6 +3,9 @@ node_js:
   - "stable"
 services:
   - postgresql
+env:
+  global:
+    - CC_TEST_REPORTER_ID=447bd3e10b09783cee42c030f9c187273027cfdd6ae41f0275a44e5557e2dd93
 before_script:
   - psql -c 'create database ireportertest_db;' -U postgres
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter

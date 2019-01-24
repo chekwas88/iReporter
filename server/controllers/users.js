@@ -20,7 +20,6 @@ export default {
       firstname, lastname, email, othername, password, phoneNumber, username,
     } = req.body;
     const encrypt = bcrypt.hidePassword(password);
-
     pool.query(queryUtils.createUserQuery,
       [firstname, lastname, email, othername, encrypt, phoneNumber, username],
       (err, response) => {
@@ -30,17 +29,7 @@ export default {
             message: 'An error occured, registration failed',
           });
         }
-
-        // check if email is in database
-        if (response.rows[0].email > 1) {
-          return res.status(403).json({
-            status: res.statusCode,
-            data: [{ message: 'This email has been registered before' }],
-          });
-        }
-
         const token = createToken.generateToken({ id: response.rows[0].id });
-
         return res.status(201).json({
           status: res.statusCode,
           data: [{
@@ -71,11 +60,10 @@ export default {
     pool.query(queryUtils.loginQuery, [email], (err, response) => {
       if (err) {
         console.log(err);
-        return res.status(404).send({
-          message: 'unable to login',
+        return res.status(500).send({
+          message: 'server error, unable to login',
         });
       }
-
       const user = response.rows[0];
       if (!user) {
         return res.status(401).send({
@@ -83,7 +71,6 @@ export default {
           message: 'Email or password is incorrect',
         });
       }
-
       const encryptedPassword = response.rows[0].password;
       const decodedPassword = bcrypt.checkPassword(password, encryptedPassword);
       if (!decodedPassword) {
@@ -92,15 +79,12 @@ export default {
           message: 'Email or password is incorrect',
         });
       }
-
-      // console.log(response.rows[0]);
       const { id, username, isadmin } = response.rows[0];
       const payload = {
         id,
         username,
         isadmin,
       };
-
       const token = createToken.generateToken(payload);
 
       return res.status(201).json({

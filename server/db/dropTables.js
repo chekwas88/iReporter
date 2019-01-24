@@ -1,45 +1,20 @@
 /* eslint-disable operator-linebreak */
 import dotenv from 'dotenv';
-import { Pool } from 'pg';
+// import { Pool } from 'pg';
+import con from './db-connection';
+import dropQueries from './drop-table-queries';
 
 dotenv.config();
-
-let pool;
-if (process.env.NODE_ENV === 'development') {
-  pool = new Pool({
-    connectionString: process.env.DEVDB,
-  });
-  // check for test env
-} else if (process.env.NODE_ENV === 'test') {
-  pool = new Pool({
-    connectionString: process.env.TESTDB,
-  });
-} else {
-  pool = new Pool({
-    connectionString: process.env.PRODUCTIONDB,
-  });
-}
+const pool = con();
 export default {
-  dropIncidentsTable: () => {
-    const queryText = 'DROP TABLE IF EXISTS incidents CASCADE';
-    pool.query(queryText)
+  dropTables: () => {
+    pool.query(dropQueries)
       .then((res) => {
         console.log(res);
         pool.end();
       })
       .catch((err) => {
         console.log(err);
-      });
-  },
-  dropUsersTable: () => {
-    const queryText = 'DROP TABLE IF EXISTS users CASCADE';
-    pool.query(queryText)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        pool.end();
       });
   },
 };

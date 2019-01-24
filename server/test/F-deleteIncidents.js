@@ -6,7 +6,6 @@ import {
 import { use, request, assert } from 'chai';
 import chaihttp from 'chai-http';
 import app from '../app';
-import table from '../db/dropTables';
 
 
 use(chaihttp);
@@ -77,5 +76,4 @@ describe('F) Delete incident', () => {
         done(err);
       });
   });
-  table.dropIncidentsTable();
 });

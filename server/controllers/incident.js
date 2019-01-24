@@ -73,33 +73,29 @@ export default {
   getIncident: (req, res) => {
     const incidentId = parseInt(req.params.id, 10);
     const { id } = req.user;
-    pool.query(
-      queryUtils.getUserSpecificIncidentQuery,
-      [incidentId, id],
-      (err, response) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({
-            status: res.statusCode,
-            message: 'Internal server error',
-          });
-        }
-        if (id !== response.rows[0].createdby) {
-          return res.status(401).json({
-            status: res.statusCode,
-            message: 'You are not authorized to view this report',
-          });
-        }
-
-        return res.status(200).json({
+    pool.query(queryUtils.getUserSpecificIncidentQuery, [incidentId, id], (err, response) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
           status: res.statusCode,
-          data: [{
-            message: 'record retrieved successfully',
-            record: response.rows[0],
-          }],
+          message: 'Internal server error',
         });
-      },
-    );
+      }
+      if (id !== response.rows[0].createdby) {
+        return res.status(401).json({
+          status: res.statusCode,
+          message: 'You are not authorized to view this report',
+        });
+      }
+
+      return res.status(200).json({
+        status: res.statusCode,
+        data: [{
+          message: 'record retrieved successfully',
+          record: response.rows[0],
+        }],
+      });
+    });
   },
 
   /**
@@ -113,50 +109,44 @@ export default {
     const { location } = req.body;
     const incidentId = parseInt(req.params.id, 10);
     const { id } = req.user;
-    pool.query(
-      queryUtils.getOneIncidentQuery,
-      [incidentId],
-      (err, response) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({
-            status: res.statusCode,
-            message: 'Internal server error',
-          });
-        }
-        const { createdby } = response.rows[0];
-        if (response.rows[0].status === 'draft') {
-          return pool.query(
-            queryUtils.updateLocationQuery,
-            [location, incidentId, id],
-            (error, result) => {
-              if (error) {
-                console.log(error);
-                return res.status(500).json({
-                  status: res.statusCode,
-                  message: 'Internal server error',
-                });
-              }
-              if (id !== createdby) {
-                return res.status(401).json({
-                  status: res.statusCode,
-                  message: 'You are not authorized to make any change',
-                });
-              }
-              return res.status(200).json({
-                status: res.statusCode,
-                message: 'Location has been updated successfully',
-                data: [result.rows[0]],
-              });
-            },
-          );
-        }
-        return res.status(403).json({
+    pool.query(queryUtils.getOneIncidentQuery, [incidentId], (err, response) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
           status: res.statusCode,
-          message: 'You can\'t update this report, Decision has been made',
+          message: 'Internal server error',
         });
-      },
-    );
+      }
+      const { createdby } = response.rows[0];
+      if (response.rows[0].status === 'draft') {
+        return pool.query(queryUtils.updateLocationQuery,
+          [location, incidentId, id],
+          (error, result) => {
+            if (error) {
+              console.log(error);
+              return res.status(500).json({
+                status: res.statusCode,
+                message: 'Internal server error',
+              });
+            }
+            if (id !== createdby) {
+              return res.status(401).json({
+                status: res.statusCode,
+                message: 'You are not authorized to make any change',
+              });
+            }
+            return res.status(200).json({
+              status: res.statusCode,
+              message: 'Location has been updated successfully',
+              data: [result.rows[0]],
+            });
+          });
+      }
+      return res.status(403).json({
+        status: res.statusCode,
+        message: 'You can\'t update this report, Decision has been made',
+      });
+    });
   },
 
   /**
@@ -170,50 +160,44 @@ export default {
     const { comment } = req.body;
     const incidentId = parseInt(req.params.id, 10);
     const { id } = req.user;
-    pool.query(
-      queryUtils.getOneIncidentQuery,
-      [incidentId],
-      (err, response) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({
-            status: res.statusCode,
-            message: 'Internal server error',
-          });
-        }
-        const { createdby } = response.rows[0];
-        if (response.rows[0].status === 'draft') {
-          return pool.query(
-            queryUtils.updateCommentQuery,
-            [comment, incidentId, id],
-            (error, result) => {
-              if (error) {
-                console.log(error);
-                return res.status(500).json({
-                  status: res.statusCode,
-                  message: 'Internal server error',
-                });
-              }
-              if (id !== createdby) {
-                return res.status(403).json({
-                  status: res.statusCode,
-                  message: 'You are not authorized to make any change',
-                });
-              }
-              return res.status(200).json({
-                status: res.statusCode,
-                message: 'Comment has been updated successfully',
-                data: [result.rows[0]],
-              });
-            },
-          );
-        }
-        return res.status(403).json({
+    pool.query(queryUtils.getOneIncidentQuery, [incidentId], (err, response) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
           status: res.statusCode,
-          message: 'You can\'t update this report, Decision has been made',
+          message: 'Internal server error',
         });
-      },
-    );
+      }
+      const { createdby } = response.rows[0];
+      if (response.rows[0].status === 'draft') {
+        return pool.query(queryUtils.updateCommentQuery,
+          [comment, incidentId, id],
+          (error, result) => {
+            if (error) {
+              console.log(error);
+              return res.status(500).json({
+                status: res.statusCode,
+                message: 'Internal server error',
+              });
+            }
+            if (id !== createdby) {
+              return res.status(403).json({
+                status: res.statusCode,
+                message: 'You are not authorized to make any change',
+              });
+            }
+            return res.status(200).json({
+              status: res.statusCode,
+              message: 'Comment has been updated successfully',
+              data: [result.rows[0]],
+            });
+          });
+      }
+      return res.status(403).json({
+        status: res.statusCode,
+        message: 'You can\'t update this report, Decision has been made',
+      });
+    });
   },
 
 
@@ -227,8 +211,7 @@ export default {
   deleteIncident: (req, res) => {
     const incidentId = parseInt(req.params.id, 10);
     const { id } = req.user;
-    pool.query(
-      queryUtils.getOneIncidentQuery,
+    pool.query(queryUtils.getOneIncidentQuery,
       [incidentId],
       (err, response) => {
         if (err) {
@@ -240,8 +223,7 @@ export default {
         }
         const { createdby } = response.rows[0];
         if (response.rows[0].status === 'draft') {
-          return pool.query(
-            queryUtils.deleteQuery,
+          return pool.query(queryUtils.deleteQuery,
             [incidentId, id],
             (error, result) => {
               if (error) {
@@ -262,15 +244,13 @@ export default {
                 message: 'Report has been deleted successfully',
                 deleted: result.rows[0],
               });
-            },
-          );
+            });
         }
         return res.status(403).json({
           status: res.statusCode,
           message: 'You are not authorized to delete',
         });
-      },
-    );
+      });
   },
 
   /**
@@ -284,8 +264,7 @@ export default {
     const { comment, location, title } = req.body;
     const incidentId = parseInt(req.params.id, 10);
     const { id } = req.user;
-    pool.query(
-      queryUtils.getOneIncidentQuery,
+    pool.query(queryUtils.getOneIncidentQuery,
       [incidentId],
       (err, response) => {
         if (err) {
@@ -297,8 +276,7 @@ export default {
         }
         const { createdby } = response.rows[0];
         if (response.rows[0].status === 'draft') {
-          return pool.query(
-            queryUtils.updateAllQuery,
+          return pool.query(queryUtils.updateAllQuery,
             [comment, location, title, incidentId, id],
             (error, result) => {
               if (error) {
@@ -319,14 +297,12 @@ export default {
                 message: 'Record has been updated successfully',
                 data: [result.rows[0]],
               });
-            },
-          );
+            });
         }
         return res.status(403).json({
           status: res.statusCode,
           message: 'You can\'t update this report, Decision has been made',
         });
-      },
-    );
+      });
   },
 };
