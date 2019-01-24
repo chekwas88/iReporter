@@ -4,160 +4,324 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _incident = require('../model/incident');
+var _dotenv = require('dotenv');
 
-var _incident2 = _interopRequireDefault(_incident);
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
+var _queryutils = require('../queryutils');
+
+var _queryutils2 = _interopRequireDefault(_queryutils);
+
+var _dbConnection = require('../db/db-connection');
+
+var _dbConnection2 = _interopRequireDefault(_dbConnection);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var pool = (0, _dbConnection2.default)();
+
+_dotenv2.default.config();
 exports.default = {
+
   /**
-   * @function getIncidents - returns all created incidents
-   * @function getIncident - returns an incident
-   * @function createIncident - creates an incident
-   * @function updateLocation - updates an incident's  location
-   * @function updateComment - updates an incident's comment
-   * @function deleteIncident - deletes an incident
-   * @function updateAll - update an incident
+   * @function getUserIncidents - returns all user specific created incidents
    * @param {object} req - request object
    * @param {object} res - response object
    * @returns {object} json data
-   */
+  */
+  getUserIncidents: function getUserIncidents(req, res) {
+    var id = req.user.id;
 
-  getIncidents: function getIncidents(req, res) {
-    if (!_incident2.default.incidents) {
-      return res.status(404).json({
-        status: 404,
-        message: 'An error occured, no incident was found'
+    pool.query(_queryutils2.default.getUserSpecificIncidentsQuery, [id], function (err, response) {
+      if (err) {
+        console.log(err);
+        return res.status(404).json({
+          status: 500,
+          message: 'Internal server error'
+        });
+      }
+      return res.status(200).json({
+        status: res.statusCode,
+        message: 'All incidents returned successfully',
+        data: response.rows
       });
-    }
-    var status = res.statusCode;
-    _incident2.default.status = status;
-    return res.send(_incident2.default);
+    });
   },
+
+  /**
+  *  @function createIncident - creates an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  */
 
   createIncident: function createIncident(req, res) {
-    var id = _incident2.default.incidents.length;
-    var status = 'draft';
-    var redFlag = {
-      id: id,
-      status: status,
-      createdBy: req.body.createdBy,
-      createdOn: req.body.createdOn,
-      type: req.body.type,
-      title: req.body.title,
-      comment: req.body.comment,
-      location: req.body.location
-    };
+    var _req$body = req.body,
+        location = _req$body.location,
+        title = _req$body.title,
+        comment = _req$body.comment;
+    var id = req.user.id;
 
-    _incident2.default.incidents.push(redFlag);
-    return res.json({
-      status: res.statusCode,
-      incidents: [{
-        id: id,
-        message: 'red-flag incident was created successfully'
-      }]
+    pool.query(_queryutils2.default.createIncidentQuery, [id, location, title, comment], function (err, response) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          status: res.statusCode,
+          message: 'Internal server error'
+        });
+      }
+      return res.status(201).json({
+        status: res.statusCode,
+        data: [{
+          message: 'Record created successfully',
+          record: response.rows[0]
+        }]
+      });
     });
   },
+
+  /**
+   * @function getIncident - returns an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  */
 
   getIncident: function getIncident(req, res) {
-    var incident = _incident2.default.incidents.find(function (i) {
-      return i.id === parseInt(req.params.id, 10);
-    });
-    if (!incident) {
-      return res.status(404).json({
+    var incidentId = parseInt(req.params.id, 10);
+    var id = req.user.id;
+
+    pool.query(_queryutils2.default.getUserSpecificIncidentQuery, [incidentId, id], function (err, response) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          status: res.statusCode,
+          message: 'Internal server error'
+        });
+      }
+      if (id !== response.rows[0].createdby) {
+        return res.status(401).json({
+          status: res.statusCode,
+          message: 'You are not authorized to view this report'
+        });
+      }
+
+      return res.status(200).json({
         status: res.statusCode,
-        message: 'An error occured, could not return incident'
+        data: [{
+          message: 'record retrieved successfully',
+          record: response.rows[0]
+        }]
       });
-    }
-    return res.json({
-      status: res.statusCode,
-      incidents: [incident]
     });
   },
+
+  /**
+   * @function updateLocation - updates an incident's  location
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  */
 
   updateLocation: function updateLocation(req, res) {
-    var incident = _incident2.default.incidents.find(function (i) {
-      return i.id === parseInt(req.params.id, 10);
-    });
-    if (!incident) {
-      return res.status(404).json({
+    var location = req.body.location;
+
+    var incidentId = parseInt(req.params.id, 10);
+    var id = req.user.id;
+
+    pool.query(_queryutils2.default.getOneIncidentQuery, [incidentId], function (err, response) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          status: res.statusCode,
+          message: 'Internal server error'
+        });
+      }
+      var createdby = response.rows[0].createdby;
+
+      if (response.rows[0].status === 'draft') {
+        return pool.query(_queryutils2.default.updateLocationQuery, [location, incidentId, id], function (error, result) {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({
+              status: res.statusCode,
+              message: 'Internal server error'
+            });
+          }
+          if (id !== createdby) {
+            return res.status(401).json({
+              status: res.statusCode,
+              message: 'You are not authorized to make any change'
+            });
+          }
+          return res.status(200).json({
+            status: res.statusCode,
+            message: 'Location has been updated successfully',
+            data: [result.rows[0]]
+          });
+        });
+      }
+      return res.status(403).json({
         status: res.statusCode,
-        message: 'Location failed to update'
+        message: 'You can\'t update this report, Decision has been made'
       });
-    }
-    incident.location = req.body.location;
-    return res.json({
-      status: res.statusCode,
-      incidents: [{
-        id: incident.id,
-        message: 'location has been successfully updated'
-      }]
     });
   },
+
+  /**
+   * @function updateComment - updates an incident's comment
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  */
 
   updateComment: function updateComment(req, res) {
-    var incident = _incident2.default.incidents.find(function (i) {
-      return i.id === parseInt(req.params.id, 10);
-    });
-    if (!incident) {
-      return res.status(404).json({
+    var comment = req.body.comment;
+
+    var incidentId = parseInt(req.params.id, 10);
+    var id = req.user.id;
+
+    pool.query(_queryutils2.default.getOneIncidentQuery, [incidentId], function (err, response) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          status: res.statusCode,
+          message: 'Internal server error'
+        });
+      }
+      var createdby = response.rows[0].createdby;
+
+      if (response.rows[0].status === 'draft') {
+        return pool.query(_queryutils2.default.updateCommentQuery, [comment, incidentId, id], function (error, result) {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({
+              status: res.statusCode,
+              message: 'Internal server error'
+            });
+          }
+          if (id !== createdby) {
+            return res.status(403).json({
+              status: res.statusCode,
+              message: 'You are not authorized to make any change'
+            });
+          }
+          return res.status(200).json({
+            status: res.statusCode,
+            message: 'Comment has been updated successfully',
+            data: [result.rows[0]]
+          });
+        });
+      }
+      return res.status(403).json({
         status: res.statusCode,
-        message: 'Comment failed to update'
+        message: 'You can\'t update this report, Decision has been made'
       });
-    }
-    incident.comment = req.body.comment;
-    return res.json({
-      status: res.statusCode,
-      incidents: [{
-        id: incident.id,
-        message: 'comment has been successfully updated'
-      }]
     });
   },
+
+  /**
+   * @function deleteIncident - deletes an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  */
 
   deleteIncident: function deleteIncident(req, res) {
-    var incident = _incident2.default.incidents.find(function (i) {
-      return i.id === parseInt(req.params.id, 10);
-    });
-    if (!incident) {
-      return res.status(404).json({
-        status: res.statusCode,
-        message: 'incident failed to delete'
-      });
-    }
-    var incidentIndex = _incident2.default.incidents.indexOf(incident);
-    _incident2.default.incidents.splice(incidentIndex, 1);
+    var incidentId = parseInt(req.params.id, 10);
+    var id = req.user.id;
 
-    return res.json({
-      status: res.statusCode,
-      incidents: [{
-        id: incident.id,
-        message: 'record deleted successfully'
-      }]
+    pool.query(_queryutils2.default.getOneIncidentQuery, [incidentId], function (err, response) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          status: res.statusCode,
+          message: 'Internal server error'
+        });
+      }
+      var createdby = response.rows[0].createdby;
+
+      if (response.rows[0].status === 'draft') {
+        return pool.query(_queryutils2.default.deleteQuery, [incidentId, id], function (error, result) {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({
+              status: res.statusCode,
+              message: 'Internal server error'
+            });
+          }
+          if (id !== createdby) {
+            return res.status(403).json({
+              status: res.statusCode,
+              message: 'You are not authorized to make any change'
+            });
+          }
+          return res.status(200).json({
+            status: res.statusCode,
+            message: 'Report has been deleted successfully',
+            deleted: result.rows[0]
+          });
+        });
+      }
+      return res.status(403).json({
+        status: res.statusCode,
+        message: 'You are not authorized to delete'
+      });
     });
   },
 
+  /**
+   * @function updateAll - update an incident
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  */
+
   updateAll: function updateAll(req, res) {
-    var incident = _incident2.default.incidents.find(function (i) {
-      return i.id === parseInt(req.params.id, 10);
-    });
-    if (!incident) {
-      return res.status(404).json({
+    var _req$body2 = req.body,
+        comment = _req$body2.comment,
+        location = _req$body2.location,
+        title = _req$body2.title;
+
+    var incidentId = parseInt(req.params.id, 10);
+    var id = req.user.id;
+
+    pool.query(_queryutils2.default.getOneIncidentQuery, [incidentId], function (err, response) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          status: res.statusCode,
+          message: 'Internal server error'
+        });
+      }
+      var createdby = response.rows[0].createdby;
+
+      if (response.rows[0].status === 'draft') {
+        return pool.query(_queryutils2.default.updateAllQuery, [comment, location, title, incidentId, id], function (error, result) {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({
+              status: res.statusCode,
+              message: 'Internal server error'
+            });
+          }
+          if (id !== createdby) {
+            return res.status(403).json({
+              status: res.statusCode,
+              message: 'You are not authorized to make any change'
+            });
+          }
+          return res.status(200).json({
+            status: res.statusCode,
+            message: 'Record has been updated successfully',
+            data: [result.rows[0]]
+          });
+        });
+      }
+      return res.status(403).json({
         status: res.statusCode,
-        message: 'An error ocurred, incident failed to update'
+        message: 'You can\'t update this report, Decision has been made'
       });
-    }
-    incident.location = req.body.location;
-    incident.comment = req.body.comment;
-    incident.title = req.body.title;
-    incident.type = req.body.type;
-    return res.json({
-      status: res.statusCode,
-      incidents: [{
-        id: incident.id,
-        message: 'redcord has been successfully updated'
-      }]
     });
   }
 };

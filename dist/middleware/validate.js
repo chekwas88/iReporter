@@ -10,67 +10,70 @@ var _joi2 = _interopRequireDefault(_joi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var validateSchema = function validateSchema(request, bodySchema, response, nextAction) {
+  var schemaReturn = _joi2.default.validate(request.body, bodySchema);
+  if (schemaReturn.error) {
+    return response.status(400).send({
+      status: 400,
+      message: schemaReturn.error.details[0].message
+    });
+  }
+  return nextAction();
+};
+
 exports.default = {
   /**
+   * @function  validatePost - check for input validation before creating an incident
    * @param {object} req - request object
    * @param {object} res - response object
    * @returns {object} json data
    *
    * */
-
-  // validate data for posting incident
-
   validatePost: function validatePost(req, res, next) {
     var schema = {
-      createdBy: _joi2.default.number().required(),
       type: _joi2.default.string(),
-      createdOn: _joi2.default.string().required(),
       title: _joi2.default.string(),
       comment: _joi2.default.string().required(),
       location: _joi2.default.string().required()
     };
-
-    var schemaReturn = _joi2.default.validate(req.body, schema);
-    if (schemaReturn.error) {
-      console.log(schemaReturn.error);
-      return res.status(400).send({
-        status: 400,
-        message: schemaReturn.error.details[0].message
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
 
-  // validate data for patching comment
-
+  /**
+  * @function  validatePatchComment - validate comment before patching
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
   validatePatchComment: function validatePatchComment(req, res, next) {
     var schema = {
       comment: _joi2.default.string().required()
     };
-    var schemaReturn = _joi2.default.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        message: schemaReturn.error.details[0].message
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
-  // validate data for patching comment
 
+  /**
+  * @function  validatePatchLocation - validate location before patching
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
   validatePatchLocation: function validatePatchLocation(req, res, next) {
     var schema = {
       location: _joi2.default.string().required()
     };
-    var schemaReturn = _joi2.default.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        message: schemaReturn.error.details[0].message
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
 
-  // validate data for updating  incident
+  /**
+  * @function  validatePatchEdit - validate incident's inputs before patching
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
   validatePatchEdit: function validatePatchEdit(req, res, next) {
     var schema = {
       type: _joi2.default.string(),
@@ -78,16 +81,16 @@ exports.default = {
       comment: _joi2.default.string().required(),
       location: _joi2.default.string().required()
     };
-
-    var schemaReturn = _joi2.default.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        message: schemaReturn.error.details[0].message
-      });
-    }
-    return next();
+    validateSchema(req, schema, res, next);
   },
 
+  /**
+   * @function   validateUser - check for input validation before registering a user
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} json data
+   *
+   * */
   validateUser: function validateUser(req, res, next) {
     var schema = {
       firstname: _joi2.default.string().required(),
@@ -95,15 +98,41 @@ exports.default = {
       othername: _joi2.default.string(),
       email: _joi2.default.string().required(),
       username: _joi2.default.string().required(),
+      password: _joi2.default.string().min(6).required(),
       phoneNumber: _joi2.default.string().required(),
       registered: _joi2.default.string()
     };
+    validateSchema(req, schema, res, next);
+  },
+  /**
+  * @function   validateUserLogin - check for input validation before user login
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
 
-    var schemaReturn = _joi2.default.validate(req.body, schema);
-    if (schemaReturn.error) {
-      return res.status(400).send({
-        status: 400,
-        message: schemaReturn.error.details[0].message
+  validateUserLogin: function validateUserLogin(req, res, next) {
+    var schema = {
+      email: _joi2.default.string().required(),
+      password: _joi2.default.string().min(6).required()
+    };
+
+    validateSchema(req, schema, res, next);
+  },
+
+  /**
+  * @function   validateIncidentId - checks for id validation
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
+  validateIncidentId: function validateIncidentId(req, res, next) {
+    if (Number.isNaN(Number(req.params.id))) {
+      return res.status(404).send({
+        status: res.statusCode,
+        message: 'invalid incident id'
       });
     }
     return next();
