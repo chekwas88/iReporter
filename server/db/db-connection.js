@@ -14,7 +14,8 @@ class Db {
       });
     } else {
       pool = new Pool({
-        connectionString: process.env.PRODUCTIONDB,
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
       });
     }
     return pool;
