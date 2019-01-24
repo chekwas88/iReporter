@@ -1,25 +1,25 @@
 import express, { json } from 'express';
-import incidents from './controllers/incident';
-import users from './controllers/users';
-import validate from './middleware/validate';
+import usersRoute from './routes/users';
+import incidentRoute from './routes/incidents';
+
 
 const app = express();
 
 app.use(json());
-// incidents endpoints
-app.get('/api/v1/red-flags', incidents.getIncidents);
-app.post('/api/v1/red-flags', validate.validatePost, incidents.createIncident);
-app.get('/api/v1/red-flags/:id', incidents.getIncident);
-app.patch('/api/v1/red-flags/:id/location', validate.validatePatchLocation, incidents.updateLocation);
-app.patch('/api/v1/red-flags/:id/comment', validate.validatePatchComment, incidents.updateComment);
-app.delete('/api/v1/red-flags/:id', incidents.deleteIncident);
-app.patch('/api/v1/red-flags/:id', validate.validatePatchEdit, incidents.updateAll);
+app.use(usersRoute);
+app.use(incidentRoute);
 
+app.get('/api/v1/', (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to iReporter',
+  });
+});
 
-// users endpoints
-app.post('/api/v1/users', validate.validateUser, users.registerUser);
-app.get('/api/v1/users/:id', users.getUser);
-
+app.all('*', (req, res) => {
+  res.status(404).json({
+    message: 'No such endpoint exist',
+  });
+});
 const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 

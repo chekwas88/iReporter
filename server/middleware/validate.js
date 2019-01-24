@@ -12,9 +12,7 @@ export default {
 
   validatePost: (req, res, next) => {
     const schema = {
-      createdBy: Joi.number().required(),
       type: Joi.string(),
-      createdOn: Joi.string().required(),
       title: Joi.string(),
       comment: Joi.string().required(),
       location: Joi.string().required(),
@@ -113,6 +111,7 @@ export default {
       othername: Joi.string(),
       email: Joi.string().required(),
       username: Joi.string().required(),
+      password: Joi.string().min(6).required(),
       phoneNumber: Joi.string().required(),
       registered: Joi.string(),
     };
@@ -122,6 +121,39 @@ export default {
       return res.status(400).send({
         status: 400,
         message: schemaReturn.error.details[0].message,
+      });
+    }
+    return next();
+  },
+  /**
+  * @function   validateUserLogin - check for input validation before user login
+  * @param {object} req - request object
+  * @param {object} res - response object
+  * @returns {object} json data
+  *
+  * */
+
+  validateUserLogin: (req, res, next) => {
+    const schema = {
+      email: Joi.string().required(),
+      password: Joi.string().min(6).required(),
+    };
+
+    const schemaReturn = Joi.validate(req.body, schema);
+    if (schemaReturn.error) {
+      return res.status(400).send({
+        status: 400,
+        message: schemaReturn.error.details[0].message,
+      });
+    }
+    return next();
+  },
+
+  validateIncidentId: (req, res, next) => {
+    if (Number.isNaN(Number(req.params.id))) {
+      return res.status(404).send({
+        status: res.statusCode,
+        message: 'invalid incident id',
       });
     }
     return next();
