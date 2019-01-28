@@ -171,7 +171,7 @@ describe('A) POST registration /users/register', () => {
 });
 
 describe('B) POST login /auth/users/login', () => {
-  it('it should login in a user', (done) => {
+  it('it should login a user', (done) => {
     request(app)
       .post('/auth/users/login')
       .send({
@@ -180,9 +180,8 @@ describe('B) POST login /auth/users/login', () => {
       })
       .end((err, res) => {
         assert.equal(res.body.data[0].message, 'login was successful');
-        assert.exists(res.body.data[0].user, 'an error occured, firstname does not exist');
-        assert.isObject(res.body.data[0].user, 'it should be an object');
-        assert.isNotEmpty(res.body.data[0].user, 'it should not empty');
+        assert.isArray(res.body.data, 'it should be an object');
+        assert.isNotEmpty(res.body.data, 'it should not be empty');
         assert.equal(res.status, 201, 'request was unsuccessful');
         done(err);
       });
