@@ -55,10 +55,8 @@ export default {
         }
         return res.status(201).json({
           status: res.statusCode,
-          data: [{
-            message: 'Record created successfully',
-            record: response.rows[0],
-          }],
+          message: 'Record created successfully',
+          data: response.rows[0],
         });
       });
   },
@@ -90,10 +88,8 @@ export default {
 
       return res.status(200).json({
         status: res.statusCode,
-        data: [{
-          message: 'record retrieved successfully',
-          record: response.rows[0],
-        }],
+        message: 'record retrieved successfully',
+        data: response.rows[0],
       });
     });
   },
@@ -138,7 +134,7 @@ export default {
             return res.status(200).json({
               status: res.statusCode,
               message: 'Location has been updated successfully',
-              data: [result.rows[0]],
+              data: result.rows[0],
             });
           });
       }
@@ -189,7 +185,7 @@ export default {
             return res.status(200).json({
               status: res.statusCode,
               message: 'Comment has been updated successfully',
-              data: [result.rows[0]],
+              data: result.rows[0],
             });
           });
       }
@@ -295,7 +291,7 @@ export default {
               return res.status(200).json({
                 status: res.statusCode,
                 message: 'Record has been updated successfully',
-                data: [result.rows[0]],
+                data: result.rows[0],
               });
             });
         }

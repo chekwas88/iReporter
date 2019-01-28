@@ -29,10 +29,10 @@ describe('C) POST incidents', () => {
       })
       .end((err, res) => {
         assert.equal(res.status, 201);
-        assert.equal(res.body.data[0].message, 'Record created successfully');
-        assert.exists(res.body.data[0].record);
-        assert.isObject(res.body.data[0].record);
-        assert.isNotEmpty(res.body.data[0].record);
+        assert.equal(res.body.message, 'Record created successfully');
+        assert.exists(res.body.data);
+        assert.isObject(res.body.data);
+        assert.isNotEmpty(res.body.data);
         done(err);
       });
   });

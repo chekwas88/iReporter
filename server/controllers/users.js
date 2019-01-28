@@ -36,13 +36,6 @@ export default {
             id: response.rows[0].id,
             message: 'user has been registered successfully',
             token,
-            user: {
-              firstname: response.rows[0].firstname,
-              lastname: response.rows[0].lastname,
-              othername: response.rows[0].othername,
-              phoneNumber: response.rows[0].phoneNumber,
-              username: response.rows[0].username,
-            },
           }],
         });
       });
@@ -93,13 +86,6 @@ export default {
           id: response.rows[0].id,
           message: 'login was successful',
           token,
-          user: {
-            firstname: response.rows[0].firstname,
-            lastname: response.rows[0].lastname,
-            othername: response.rows[0].othername,
-            phoneNumber: response.rows[0].phoneNumber,
-            username: response.rows[0].username,
-          },
         }],
       });
     });

@@ -59,7 +59,7 @@ export default {
       return res.status(200).json({
         status: res.statusCode,
         message: 'Status changed successfully',
-        data: [response.rows[0]],
+        data: response.rows[0],
       });
     });
   },

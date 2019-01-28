@@ -95,10 +95,10 @@ describe('D) GET incidents', () => {
       .end((err, res) => {
         assert.equal(res.status, 200);
         assert.equal(
-          res.body.data[0].message,
+          res.body.message,
           'record retrieved successfully',
         );
-        assert.isObject(res.body.data[0].record, 'This should be an object');
+        assert.isObject(res.body.data, 'This should be an object');
         done(err);
       });
   });

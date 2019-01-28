@@ -70,7 +70,8 @@ describe('E) PATCH incidents', () => {
           res.body.message,
           'Location has been updated successfully',
         );
-        assert.isArray(res.body.data, 'This should be an array of objects');
+        assert.isObject(res.body.data, 'This should be an array of objects');
+        assert.exists(res.body.data.location);
         done(err);
       });
   });
@@ -116,7 +117,8 @@ describe('E) PATCH incidents', () => {
           res.body.message,
           'Comment has been updated successfully',
         );
-        assert.isArray(res.body.data, 'This should be an array of objects');
+        assert.isObject(res.body.data, 'This should be an array of objects');
+        assert.exists(res.body.data.comment);
         done(err);
       });
   });
@@ -177,11 +179,13 @@ describe('E) PATCH incidents', () => {
           res.body.message,
           'Record has been updated successfully',
         );
-        assert.isArray(res.body.data, 'This should be an array of object');
+        assert.isObject(res.body.data, 'This should be an array of object');
+        assert.exists(res.body.data.location);
+        assert.exists(res.body.data.comment);
         done(err);
       });
   });
-  it('it should return an error if comment is no provided', (done) => {
+  it('it should return an error if comment is not provided', (done) => {
     request(app)
       .patch('/api/v1/incidents/1')
       .set('authorization', `Bearer ${token}`)
@@ -245,7 +249,8 @@ describe('E) PATCH incidents', () => {
           res.body.message,
           'Status changed successfully',
         );
-        assert.isArray(res.body.data, 'This should be an array of objects');
+        assert.isObject(res.body.data, 'This should be an array of objects');
+        assert.exists(res.body.data.status);
         done(err);
       });
   });

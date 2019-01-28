@@ -23,6 +23,7 @@ export default {
     const schema = {
       type: Joi.string(),
       title: Joi.string(),
+      image: Joi.string(),
       comment: Joi.string().required(),
       location: Joi.string().required(),
     };
@@ -68,6 +69,7 @@ export default {
     const schema = {
       type: Joi.string(),
       title: Joi.string(),
+      image: Joi.string(),
       comment: Joi.string().required(),
       location: Joi.string().required(),
     };
