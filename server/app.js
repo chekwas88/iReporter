@@ -1,4 +1,5 @@
 import express, { json } from 'express';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import usersRoute from './routes/users';
 import swaggerDocument from '../swagger.json';
@@ -6,6 +7,15 @@ import incidentRoute from './routes/incidents';
 
 
 const app = express();
+
+app.use(cors());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, PATCH, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
+});
 
 app.use(json());
 
