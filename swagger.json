@@ -170,9 +170,11 @@
     },
     "/api/v1/incidents": {
       "get": {
-        "security": {
-          "bearerAuth": []
-        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Incidents"
         ],
@@ -337,79 +339,79 @@
               }
             }
           }
-        },
-        "/api/v1/incidents/{incident_id}": {
-          "parameters": [
-            {
-              "name": "incident_id",
-              "in": "path",
-              "description": "ID of incident",
-              "required": true,
-              "schema": {
-                "type": "integer"
-              },
-              "style": "simple"
-            }
-          ],
-          "get": {
-            "tags": [
-              "Incidents"
-            ],
-            "summary": "Get specific incident report",
-            "description": "This endpoint specific incident report in the database",
-            "responses": {
-              "200": {
-                "description": "Returns specific incident report record in the database successfully",
-                "content": {
-                  "application/json; charset=utf-8": {
-                    "schema": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "integer"
-                        },
-                        "message": {
-                          "type": "string"
-                        },
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "integer"
-                              },
-                              "createdOn": {
-                                "type": "string"
-                              },
-                              "createdBy": {
-                                "type": "integer"
-                              },
-                              "type": {
-                                "type": "string"
-                              },
-                              "title": {
-                                "type": "string"
-                              },
-                              "status": {
-                                "type": "string"
-                              },
-                              "images": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string"
-                                }
-                              },
-                              "videos": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string"
-                                }
-                              },
-                              "comment": {
-                                "type": "string"
-                              }
+        }
+      }
+    },
+    "/api/v1/incidents/{incident_id}": {
+      "parameters": [
+        {
+          "name": "incident_id",
+          "in": "path",
+          "description": "ID of incident",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          },
+          "style": "simple"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Get specific incident report",
+        "description": "This endpoint specific incident report in the database",
+        "responses": {
+          "200": {
+            "description": "Returns specific incident report record in the database successfully",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "createdOn": {
+                            "type": "string"
+                          },
+                          "createdBy": {
+                            "type": "integer"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "images": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
                             }
+                          },
+                          "videos": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "comment": {
+                            "type": "string"
                           }
                         }
                       }
