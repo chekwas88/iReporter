@@ -16,22 +16,49 @@ iReporter web app is an app that enables citizens of a country to report corrupt
 
 ## Technologies
 
-- Node.js
-- Express
-- Eslint
-- Mocha
-- chai
-- Babel
-- Joi
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com)
+- [Eslint](https://eslint.org)
+- [Mocha](https://mochajs.org)
+- [Chai](http://chaijs.com)
+- [Babel](https://babeljs.io)
+- [Joi](https://github.com/hapijs/joi)
 
 ## API 
-|Endpoints                                 |  Functions                                              |
-|------------------------------------------|---------------------------------------------------------|
-| POST  /api/v1/users                      | register user                                           |
-| GET   /api/v1/users/:id                  | login user                                              |
-| GET   /api/v1/red-flags                  | returns all red-flag or intervention reports            |
-| GET   /api/v1/red-flags/:id              | returns the requested red-flag or intervention report.  |
-| POST  /api/v1/red-flags                  | create a report                                         |
-| PATCH /api/v1/red-flags/:id/location     | update a report's location                              |
-| PATCH /api/v1/red-flags/:id/comment      | update a report's comment                               |
-| PATCH /api/v1/red-flags/:id              | update a report
+|Endpoints                                 |  Functions                                                                          |
+|------------------------------------------|-------------------------------------------------------------------------------------|
+| POST  /users/register                    | register user.                                                                      |
+| POST  /auth/users/login                  | login user.                                                                         |
+| POST  /api/v1/incidents                  | creates a report.                                                                   |
+| GET   /api/v1/incidents                  | return all red-flag or intervention reports. Only Admin can perform this action.    |        
+| GET   /api/v1/incidents/:id              | returns the requested red-flag or intervention report.                              |
+| GET /api/v1/user/profile/incidents       | return all incident reports created by the user.                                    |
+| PATCH /api/v1/incidents/:id/location     | updates a report's location.                                                        |
+| PATCH /api/v1/incidents/:id/comment      | updates a report's comment.                                                         |
+| PATCH /api/v1/incidents/:id              | updates a report.                                                                   |
+| PATCH /api/v1/incidents/:id/status       | updates an incident report's status. Only Admin can perform this action.            | 
+| DELETE /api/v1/incidents/:id             | deletes the specified incident reprot.                                              |
+
+## DOCUMENTATION
+For the full API documentation visit [Documentation](https://ireporter-chekwas88.herokuapp.com/api-docs)
+
+## Requirement and Installation
+This project requires you to have **Node** and  **Git** installed in your system.
+To run this project:
+clone the repo:
+
+```sh
+git clone https://github.com/chekwas88/iReporter.git
+```
+
+cd into iReporter
+
+run `npm install` on the command line to install packages.
+
+run `npm start` to start up the project.
+
+## UI Template
+The UI template of this project is available at [UI](https://chekwas88.github.io/iReporter/) 
+
+## API
+The API for this project is hosted at [iReporter](https://ireporter-chekwas88.herokuapp.com/)
