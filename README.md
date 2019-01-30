@@ -2,7 +2,6 @@
 [![Build Status](https://travis-ci.org/chekwas88/iReporter.svg?branch=develop)](https://travis-ci.org/chekwas88/iReporter)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d666223bb5aa1c7fe65b/maintainability)](https://codeclimate.com/github/chekwas88/iReporter/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/chekwas88/iReporter/badge.svg?branch=develop)](https://coveralls.io/github/chekwas88/iReporter?branch=develop)
-
 iReporter web app is an app that enables citizens of a country to report corruption and intervention cases to appropriate authorities.
 
 ## Features
